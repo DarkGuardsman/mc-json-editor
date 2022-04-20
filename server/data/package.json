@@ -1,0 +1,11 @@
+{
+  "name": "json-data-server",
+  "version": "1.0.0",
+  "description": "Data server for json editor",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Robin Seifert",
+  "license": "MIT"
+}
