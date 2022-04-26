@@ -21,7 +21,7 @@ export const Loading = MockTemplate.bind({});
 Loading.parameters = {
     msw: {
         handlers: [
-            graphql.query("FileList", (reg, res, ctx) => {
+            graphql.query("FilesList", (reg, res, ctx) => {
                 return res(
                     ctx.delay("infinite")
                 )
@@ -36,7 +36,7 @@ export const Error = MockTemplate.bind({});
 Error.parameters = {
     msw: {
         handlers: [
-            graphql.query("FileList", (reg, res, ctx) => {
+            graphql.query("FilesList", (reg, res, ctx) => {
                 return res(
                     ctx.errors([
                         {

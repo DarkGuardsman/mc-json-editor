@@ -18,6 +18,10 @@ interface ProjectEntryListProps {
     projectId: Number
 }
 
+/**
+ * Entry for showing projects with associated files nested in the explorer
+ * @param {Number} projectId - unique id of the project
+ */
 export default function ProjectEntryList({projectId}: ProjectEntryListProps): JSX.Element {
     const {loading, error, data} = useQuery<QueryRoot>(PROJECTS_QUERY, {
         variables: {
@@ -34,7 +38,15 @@ export default function ProjectEntryList({projectId}: ProjectEntryListProps): JS
     return (
         <ul className='template-list'>
             {
-                data.project.templates.map(template => <TemplateEntry templateId={template.id} templateName={template.name}/>)
+                data.project.templates.map(template =>
+                {
+                    const {id, name} = template;
+                    return (
+                        <li id={`template-${id}`}>
+                            <TemplateEntry templateId={id} templateName={name}/>
+                        </li>
+                    );
+                })
             }
         </ul>
     );

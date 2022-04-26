@@ -34,7 +34,14 @@ export default function TemplateEntryList({templateId}: TemplateEntryListProps):
     return (
         <ul className='file-list'>
             {
-                data.template.files.map(file => <FileEntry fileName={file.name} />)
+                data.template.files.map(file => {
+                    const {name} = file;
+                    return (
+                        <li key={`file-${name}`}>
+                            <FileEntry fileName={name}/>
+                        </li>
+                    );
+                })
             }
         </ul>
     );
