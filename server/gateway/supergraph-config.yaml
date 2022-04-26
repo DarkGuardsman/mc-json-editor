@@ -1,0 +1,9 @@
+subgraphs:
+  file:
+    routing_url: http://localhost:6001
+    schema:
+      subgraph_url: http://localhost:6001
+  data:
+    routing_url: http://localhost:6002
+    schema:
+      subgraph_url: http://localhost:6002
