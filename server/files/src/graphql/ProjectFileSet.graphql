@@ -1,0 +1,5 @@
+# Set of files with similiar content type
+type ProjectFileSet {
+    category: ContentCategory!
+    entries: [ProjectFileEntry]!
+}

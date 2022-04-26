@@ -16,97 +16,83 @@ const typeDefs = mergeTypeDefs(documentNodes);
 const projects = [
     {
         id: 0,
-        name: "ICBM",
-        templates: [
-            {
-                id: 0,
-                name: "Shaped Crafting"
-            },
-            {
-                id: 1,
-                name: "Ex Crafting"
-            }
-        ]
-    },
-    {
-        id: 1,
-        name: "Minecraft",
-        templates: [
-            {
-                id: 0,
-                name: "Shaped Crafting"
-            },
-            {
-                id: 11,
-                name: "Furnace"
-            }
-        ]
-    },
-    {
-        id: 2,
-        name: "Winter",
-        templates: [
-            {
-                id: 0,
-                name: "Shaped Crafting"
-            },
-            {
-                id: 4,
-                name: "Wing Crafting"
-            }
-        ]
+        name: "ICBM"
     }
 ];
 
-const templates = [
+const projectFileSets = [
+    {
+        projectId: 0,
+        categoryId: 0
+    },
+    {
+        projectId: 0,
+        categoryId: 1
+    }
+];
+
+const contentCategories = [
     {
         id: 0,
         name: "Shaped Crafting"
     },
     {
         id: 1,
-        name: "Ex Crafting"
-    },
-    {
-        id: 4,
-        name: "Wing Crafting"
-    },
-    {
-        id: 11,
-        name: "Furnace"
+        name: "Shapeless Crafting"
     }
-];
+]
 
 const files = [
     {
         projectId: 0,
-        templateId: 0,
+        categoryId: 0,
         name: "crafting/iron_rod.json"
     },
     {
         projectId: 0,
-        templateId: 1,
+        categoryId: 1,
         name: "explosives/tnt.json"
     },
     {
         projectId: 0,
-        templateId: 1,
+        categoryId: 1,
         name: "explosives/condensed.json"
     }
 ]
 
+function getProjects() {
+    return projects.map(project => ({id: project.id, name: project.name}));
+}
+
+function getProject(id) {
+    return Lodash.head(getProjects().filter(project => project.id === id));
+}
+
 
 //Setup resolvers
 const resolvers = {
-    Query: {
-        projects: async (parent, args, {dataSources}, info) => projects.map(project => ({id: project.id, name: project.name})),
-        project: async  (parent, {id}, {dataSources}, info) => Lodash.head(projects.filter(project => project.id === id)),
-        template: async  (parent, {id}, {dataSources}, info) => Lodash.head(templates.filter(template => template.id === id)),
-        files: async  (parent, {templateId, projectId}, {dataSources}, info) => {
+    Project: {
+        contents: async (parent, args, {dataSources}, info) => {
+            return projectFileSets
+                .filter(set => set.projectId === parent.id)
+                .map(set => {
+                    return {
+                        projectId: parent.id,
+                        category: Lodash.head(contentCategories.filter(cat => cat.id === set.categoryId))
+                    }
+                })
+        },
+    },
+    ProjectFileSet : {
+        entries: async  (parent, _, __, info) => {
             return files
-                .filter(file => file.projectId === projectId && file.templateId === templateId)
+                .filter(file => file.categoryId === parent.category.id && file.projectId === parent.projectId)
                 .map(file => ({name: file.name}))
         }
+    },
+    Query: {
+        projects: async (parent, args, {dataSources}, info) => getProjects(),
+        project: async  (parent, {id}, {dataSources}, info) => getProject(id)
     }
 };
 

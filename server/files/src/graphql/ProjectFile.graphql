@@ -1,3 +1,0 @@
-type ProjectFile @key(fields: "name") {
-    name: String!
-}

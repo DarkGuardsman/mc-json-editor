@@ -1,0 +1,3 @@
+extend type ContentCategory @key(fields: "id") {
+    id: Int! @external
+}

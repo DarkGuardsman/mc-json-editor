@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:local": "env-cmd -f local.env nodemon src/index.mjs",
+    "start:local": "env-cmd -f local.env node src/index.mjs",
     "start": "node src/index.mjs"
   },
   "author": "Robin Seifert",
