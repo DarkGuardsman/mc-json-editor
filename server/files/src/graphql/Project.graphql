@@ -1,0 +1,5 @@
+type Project @key(fields: "id") {
+    id: Int!
+    name: String!
+    templates: [EntryTemplate]
+}

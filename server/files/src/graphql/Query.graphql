@@ -1,0 +1,6 @@
+type Query {
+    projects: [Project]
+    project(id: Int!): Project
+    template(id: Int!): EntryTemplate
+    files(templateId: Int!, projectId: Int!): [ProjectFile]
+}

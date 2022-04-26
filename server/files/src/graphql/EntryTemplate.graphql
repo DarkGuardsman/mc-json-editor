@@ -1,0 +1,5 @@
+type EntryTemplate @key(fields: "id") {
+    id: Int!
+    name: String!
+    files: [ProjectFile]
+}
