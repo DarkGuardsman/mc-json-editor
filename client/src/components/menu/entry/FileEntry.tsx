@@ -6,12 +6,10 @@ interface FileEntryProps {
 
 export default function FileEntry({fileName}: FileEntryProps): JSX.Element {
     return (
-        <li id={`file-${fileName}`}>
-            <button
-                onClick={() => currentFileVar(fileName)}
-            >
-                {`${fileName}`}
-            </button>
-        </li>
+        <button
+            onClick={() => currentFileVar(fileName)}
+        >
+            {`${fileName}`}
+        </button>
     )
 }
