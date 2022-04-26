@@ -1,5 +1,5 @@
-import { graphql } from "msw";
-import { initialize, mswDecorator } from 'msw-storybook-addon';
+import {graphql} from "msw";
+import {initialize, mswDecorator} from 'msw-storybook-addon';
 
 // Initialize MSW https://storybook.js.org/addons/msw-storybook-addon
 initialize();
@@ -47,16 +47,14 @@ export const parameters = {
             graphql.query("FilesList", (reg, res, ctx) => {
                 return res(
                     ctx.data({
-                        template: {
-                            files: [
-                                {
-                                    name: "explosives/grenade.json"
-                                },
-                                {
-                                    name: "explosives/tree.json"
-                                }
-                            ]
-                        }
+                        files: [
+                            {
+                                name: "explosives/grenade.json"
+                            },
+                            {
+                                name: "explosives/tree.json"
+                            }
+                        ]
                     })
                 )
             })

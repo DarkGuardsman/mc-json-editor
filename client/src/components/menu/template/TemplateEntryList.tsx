@@ -2,43 +2,52 @@ import {gql, useQuery} from "@apollo/client";
 import QueryRoot from "../../../types/Query";
 import {isNil} from "lodash";
 import TemplateEntry from "./TemplateEntry";
-import FileEntry from "../entry/FileEntry";
 
-const FILES_QUERY = gql`
-    query FilesList($id: Int!) {
-        template(id: $id) {
-            files {
-                name
+const PROJECTS_QUERY = gql`
+    query TemplatesList($id: Int!) {
+        project(id: $id) {
+            templates {
+                id
+                name                
             }
         }
     }
 `
 
-interface TemplateEntryListProps {
-    templateId: Number
+interface ProjectEntryListProps {
+    projectId: Number
 }
 
-export default function TemplateEntryList({templateId}: TemplateEntryListProps): JSX.Element {
-    const {loading, error, data} = useQuery<QueryRoot>(FILES_QUERY, {
+/**
+ * Entry for showing projects with associated files nested in the explorer
+ * @param {Number} projectId - unique id of the project
+ */
+export default function TemplateEntryList({projectId}: ProjectEntryListProps): JSX.Element {
+    const {loading, error, data} = useQuery<QueryRoot>(PROJECTS_QUERY, {
         variables: {
-            id: templateId
+            id: projectId
         }
     });
 
     if (loading) {
-        return <p>Loading Files...</p>
+        return <p>Loading Templates...</p>
     } else if (error || isNil(data)) {
-        return <p>Failed to load files...</p>
+        return <p>Failed to load templates...</p>
     }
 
     return (
-        <ul className='file-list'>
+        <ul className='template-list'>
             {
-                data.template.files.map(file => {
-                    const {name} = file;
+                data.project.templates.map(template =>
+                {
+                    const {id, name} = template;
                     return (
-                        <li key={`file-${name}`}>
-                            <FileEntry fileName={name}/>
+                        <li id={`template-${id}`}>
+                            <TemplateEntry
+                                projectId={projectId}
+                                templateId={id}
+                                templateName={name}
+                            />
                         </li>
                     );
                 })
