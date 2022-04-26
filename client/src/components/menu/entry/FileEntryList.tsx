@@ -33,7 +33,7 @@ export default function FileEntryList({templateId, projectId}: TemplateEntryList
     return (
         <ul className='file-list'>
             {
-                data.template.files.map(file => {
+                data.files.map(file => {
                     const {name} = file;
                     return (
                         <li key={`file-${name}`}>
