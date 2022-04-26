@@ -1,0 +1,8 @@
+# Package containing content or part of a package group
+type ContentPackage @key(fields: "id") {
+    id: Int! # database id
+    name: String # display name
+    owner: ContentAuthor # primary owner of the package
+    team: [ContentAuthor] # people working on the package
+    contents: [ContentGroup] # contents (recipes, items, blocks)
+}

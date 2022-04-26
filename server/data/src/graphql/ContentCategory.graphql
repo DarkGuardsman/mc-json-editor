@@ -1,0 +1,5 @@
+# Type of content used for grouping
+type ContentCategory @key(fields: "id") {
+    id: Int! # database id
+    name: String!# display name
+}

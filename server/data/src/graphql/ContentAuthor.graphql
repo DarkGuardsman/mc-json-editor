@@ -1,0 +1,5 @@
+type ContentAuthor @key(fields: "id") {
+    id: Int!
+    name: String!
+    curseForgeUrl: String!
+}

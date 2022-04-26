@@ -1,0 +1,9 @@
+# Entry representing the content
+type ContentEntry @key(fields: "id") {
+    id: Int! # database unique ID
+    name: String! # display name
+    type: String! #TODO convert to enum
+    icon: String! # display icon URL
+    description: String! # short description of the content
+    file: String! # url to file containing content data
+}
