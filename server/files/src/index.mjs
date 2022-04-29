@@ -70,6 +70,9 @@ const resolvers = {
         contents: async (parent, args, {dataSources}, info) => {
             return projectFileSets.filter(set => set.projectId === parent.id)
         },
+        content: async (parent, {id}, {dataSources}, info) => {
+            return Lodash.head(projectFileSets.filter(set => set.projectId === parent.id && set.category.id === id))
+        },
     },
     ProjectFileSet : {
         entries: async  (parent) => {
