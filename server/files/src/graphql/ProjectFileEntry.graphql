@@ -1,4 +1,5 @@
 # Single file entry
 type ProjectFileEntry {
     name: String!
+    fileContents: JSON #JSON file converted to string
 }
