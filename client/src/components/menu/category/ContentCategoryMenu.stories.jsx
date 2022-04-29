@@ -1,18 +1,18 @@
-import TemplateEntry from "./TemplateEntry";
+import ProjectFileSet from "./ContentCategoryMenu";
 import {createNewTestClient} from "../../../tests/ApolloTestSetup";
 import {ApolloProvider} from "@apollo/client";
 import {graphql} from "msw";
 
 export default {
     title: "Menu/TemplateEntry",
-    component: TemplateEntry
+    component: ProjectFileSet
 }
 
 const MockTemplate = (args) => {
     const testApollo = createNewTestClient();
     return (
         <ApolloProvider client={testApollo.client} >
-            <TemplateEntry templateId={5} templateName={"Shape Crafting"} />
+            <ProjectFileSet templateId={5} templateName={"Shape Crafting"} />
         </ApolloProvider>
     )
 }

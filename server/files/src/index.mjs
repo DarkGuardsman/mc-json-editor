@@ -73,10 +73,9 @@ const resolvers = {
     },
     ProjectFileSet : {
         entries: async  (parent) => {
-            const data = files
+            return files
                 .filter(file => file.categoryId === parent.category.id && file.projectId === parent.projectId)
                 .map(file => ({name: file.name}));
-            return data;
         }
     },
     Query: {

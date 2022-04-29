@@ -1,5 +1,5 @@
 import {getServer} from "../../../tests/MswSetup";
-import {Error, Loading, Success} from "./TemplateEntry.stories";
+import {Error, Loading, Success} from "./ContentCategoryMenu.stories";
 import {render, screen, waitFor} from "@testing-library/react";
 import {mockErrorConsole, unmockErrorConsole, validateNoConsoleErrors} from "../../../tests/ConsoleMocks";
 import {parameters} from "../../../../.storybook/preview";

@@ -1,4 +1,4 @@
-import TemplateEntryList from "../template/TemplateEntryList";
+import ContentCategoryList from "../category/ContentCategoryList";
 
 interface ProjectEntryProps {
     projectId: Number,
@@ -10,7 +10,7 @@ export default function ProjectEntry({projectId, projectName}: ProjectEntryProps
         <li id={`project-${projectId}`}>
             <div className='project-entry' id={`project-${projectId}`}>
                 <h3>{projectName}</h3>
-                <TemplateEntryList projectId={projectId}/>
+                <ContentCategoryList projectId={projectId}/>
             </div>
         </li>
     );

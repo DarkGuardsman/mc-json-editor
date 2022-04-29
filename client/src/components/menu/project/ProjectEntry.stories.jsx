@@ -1,7 +1,7 @@
 import {createNewTestClient} from "../../../tests/ApolloTestSetup";
 import {ApolloProvider} from "@apollo/client";
 import ProjectEntry from "./ProjectEntry";
-import TemplateEntry from "../template/TemplateEntry";
+import ProjectFileSet from "../category/ContentCategoryMenu";
 import {graphql} from "msw";
 
 export default {

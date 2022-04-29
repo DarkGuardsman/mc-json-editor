@@ -2,4 +2,5 @@ type Project @key(fields: "id") {
     id: Int!
     name: String!
     contents: [ProjectFileSet]
+    content(id: Int!): ProjectFileSet
 }
