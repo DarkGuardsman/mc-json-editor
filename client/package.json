@@ -4,13 +4,9 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.5.10",
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.1.1",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.4.1",
-    "@types/node": "^16.11.27",
-    "@types/react": "^18.0.5",
-    "@types/react-dom": "^18.0.1",
+    "@graphql-codegen/cli": "^2.6.2",
+    "@graphql-codegen/typescript": "^2.4.8",
+    "@graphql-codegen/typescript-operations": "^2.3.5",
     "graphql": "^16.3.0",
     "lodash": "^4.17.21",
     "react": "^18.0.0",
@@ -21,9 +17,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start:local": "env-cmd -f local.env react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "storybook:run": "set NODE_OPTIONS=--openssl-legacy-provider && start-storybook -p 6006 -s public"
+    "storybook:run": "set NODE_OPTIONS=--openssl-legacy-provider && start-storybook -p 6006 -s public",
+    "codegen:graphql": "graphql-codegen --config codegen.yml"
   },
   "eslintConfig": {
     "extends": [
@@ -44,10 +42,24 @@
     ]
   },
   "devDependencies": {
+    "@graphql-codegen/typescript-react-apollo": "3.2.11",
     "@storybook/react": "^6.4.22",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.1.1",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/graphql": "^14.5.0",
+    "@types/jest": "^27.4.1",
     "@types/lodash": "^4.14.182",
+    "@types/node": "^16.11.27",
+    "@types/react": "^18.0.5",
+    "@types/react-dom": "^18.0.1",
     "msw": "^0.39.2",
-    "msw-storybook-addon": "^1.6.3"
+    "msw-storybook-addon": "^1.6.3",
+    "@graphql-codegen/typescript": "2.4.8",
+    "@graphql-codegen/typescript-operations": "2.3.5",
+    "@graphql-codegen/introspection": "2.1.1",
+    "@graphql-codegen/cli": "2.6.2",
+    "env-cmd": "^10.1.0"
   },
   "msw": {
     "workerDirectory": "public"
