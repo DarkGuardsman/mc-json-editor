@@ -1,4 +1,5 @@
 type Query {
     projects: [Project]
     project(id: Int!): Project
+    file(projectId: Int!, path: String!): ProjectFileEntry
 }

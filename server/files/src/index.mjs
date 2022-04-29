@@ -4,6 +4,7 @@ import {mergeTypeDefs} from "@graphql-tools/merge";
 import {ApolloServer} from "apollo-server";
 import {buildSubgraphSchema} from "@apollo/subgraph";
 import Lodash from 'lodash';
+const {GraphQLJSON} = 'graphql-type-json';
 
 const SERVER_PORT = process.env.PORT;
 
@@ -66,6 +67,7 @@ function getProject(id) {
 
 //Setup resolvers
 const resolvers = {
+    JSON: GraphQLJSON,
     Project: {
         contents: async (parent, args, {dataSources}, info) => {
             return projectFileSets.filter(set => set.projectId === parent.id)
