@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:local": "env-cmd -f local.env node src/index.mjs",
+    "start:local": "env-cmd -f local.env nodemon src/index.mjs",
     "start": "node src/index.mjs"
   },
   "author": "Robin Seifert",
@@ -16,6 +16,7 @@
     "@graphql-tools/graphql-file-loader": "^7.3.3",
     "@graphql-tools/load": "^7.5.1",
     "@graphql-tools/merge": "^8.2.2",
+    "apollo-datasource-rest": "^3.5.2",
     "apollo-server": "^3.1.2",
     "env-cmd": "^10.1.0",
     "graphql": "^15.5.1",

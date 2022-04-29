@@ -4,8 +4,8 @@
   "description": "Graphql server for json editor",
   "main": "index.js",
   "scripts": {
-    "start": "env-cmd -f .env.local node ./index.js",
-    "compose": "rover supergraph compose --config ./supergraph-config.xml > supergraph.graphql",
+    "start:local": "env-cmd -f local.env node ./index.js",
+    "compose": "rover supergraph compose --config ./supergraph-config.yaml > supergraph.graphql",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

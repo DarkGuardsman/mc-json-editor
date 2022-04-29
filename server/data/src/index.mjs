@@ -3,6 +3,7 @@ import {GraphQLFileLoader} from "@graphql-tools/graphql-file-loader";
 import {mergeTypeDefs} from "@graphql-tools/merge";
 import {ApolloServer} from "apollo-server";
 import {buildSubgraphSchema} from "@apollo/subgraph";
+import Lodash from "lodash";
 
 const SERVER_PORT = process.env.PORT;
 
@@ -12,9 +13,28 @@ const sources = await loadTypedefs('./src/graphql/**/*.graphql', {
 const documentNodes = sources.map(source => source.document);
 const typeDefs = mergeTypeDefs(documentNodes);
 
+const categories = [
+    {
+        id: 0,
+        name: "Shaped Crafting"
+    },
+    {
+        id: 1,
+        name: "Shapeless Crafting"
+    }
+]
+
 //Setup resolvers
 const resolvers = {
-    Query: {}
+    Query: {
+        contentCategories: async () => categories,
+        contentCategory: async (_, {id}) => Lodash.head(categories.filter(cat => cat.id === id))
+    },
+    ContentCategory: {
+        __resolveReference(category) {
+            return Lodash.head(categories.filter(cat => cat.id === category.id));
+        }
+    }
 };
 
 const server = new ApolloServer({
@@ -24,6 +44,7 @@ const server = new ApolloServer({
     }),
     dataSources: () => ({}),
     context: ({req}) => {
+        console.log("reg", JSON.stringify(req.body, null, 2));
         return {
             headers: req.headers
         }

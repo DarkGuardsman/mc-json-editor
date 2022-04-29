@@ -1,5 +1,5 @@
 # Grouping of packages (buildcraft, mekanism)
-type ContentSet @key(fields: "id") {
+type ContentPackageSet @key(fields: "id") {
     id: Int! # database id
     name: String # display name
     packages: [ContentPackage] # packages to group

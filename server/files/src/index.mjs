@@ -23,24 +23,19 @@ const projects = [
 const projectFileSets = [
     {
         projectId: 0,
-        categoryId: 0
+        category: {
+            id: 0
+        }
     },
     {
         projectId: 0,
-        categoryId: 1
+        category: {
+            id: 1
+        }
     }
 ];
 
-const contentCategories = [
-    {
-        id: 0,
-        name: "Shaped Crafting"
-    },
-    {
-        id: 1,
-        name: "Shapeless Crafting"
-    }
-]
+
 
 const files = [
     {
@@ -73,21 +68,15 @@ function getProject(id) {
 const resolvers = {
     Project: {
         contents: async (parent, args, {dataSources}, info) => {
-            return projectFileSets
-                .filter(set => set.projectId === parent.id)
-                .map(set => {
-                    return {
-                        projectId: parent.id,
-                        category: Lodash.head(contentCategories.filter(cat => cat.id === set.categoryId))
-                    }
-                })
+            return projectFileSets.filter(set => set.projectId === parent.id)
         },
     },
     ProjectFileSet : {
-        entries: async  (parent, _, __, info) => {
-            return files
+        entries: async  (parent) => {
+            const data = files
                 .filter(file => file.categoryId === parent.category.id && file.projectId === parent.projectId)
-                .map(file => ({name: file.name}))
+                .map(file => ({name: file.name}));
+            return data;
         }
     },
     Query: {

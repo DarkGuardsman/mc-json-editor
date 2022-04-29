@@ -1,3 +1,6 @@
 type Query {
-    packages: [ContentSet] # all packages grouped as sets
+    packageSets: [ContentPackageSet] # all packages grouped as sets
+    packageSet(id: Int!): ContentPackageSet # single package set
+    contentCategories: [ContentCategory] # all categories
+    contentCategory(id: Int!): ContentCategory # single category
 }
