@@ -1,5 +1,8 @@
 import {graphql} from "msw";
 import {initialize, mswDecorator} from 'msw-storybook-addon';
+import projectListJson from "./mocks/ProjectsList.json";
+import projectFilesListJson from "./mocks/ProjectFilesList.json"
+import contentCategoryJson from "./mocks/ProjectContentsList.json"
 
 // Initialize MSW https://storybook.js.org/addons/msw-storybook-addon
 initialize();
@@ -11,52 +14,13 @@ export const parameters = {
     msw: {
         handlers: [
             graphql.query("ProjectsList", (reg, res, ctx) => {
-                return res(
-                    ctx.data({
-                        projects: [
-                            {
-                                id: 1239,
-                                name: "My Project"
-                            },
-                            {
-                                id: 1240,
-                                name: "ICBM-Classic"
-                            }
-                        ]
-                    })
-                )
+                return res(ctx.data(projectListJson))
             }),
-            graphql.query("TemplatesList", (reg, res, ctx) => {
-                return res(
-                    ctx.data({
-                        project: {
-                            templates: [
-                                {
-                                    id: 4,
-                                    name: "Shaped Crafting"
-                                },
-                                {
-                                    id: 5,
-                                    name: "Shapeless Crafting"
-                                }
-                            ]
-                        }
-                    })
-                )
+            graphql.query("ProjectContentsList", (reg, res, ctx) => {
+                return res(ctx.data(contentCategoryJson))
             }),
-            graphql.query("FilesList", (reg, res, ctx) => {
-                return res(
-                    ctx.data({
-                        files: [
-                            {
-                                name: "explosives/grenade.json"
-                            },
-                            {
-                                name: "explosives/tree.json"
-                            }
-                        ]
-                    })
-                )
+            graphql.query("ProjectFilesList", (reg, res, ctx) => {
+                return res(ctx.data(projectFilesListJson))
             })
         ]
     }

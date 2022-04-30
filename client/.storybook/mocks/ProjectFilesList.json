@@ -1,0 +1,14 @@
+{
+  "project": {
+    "content": {
+      "entries": [
+        {
+          "name": "crafting/iron_rod.json"
+        },
+        {
+          "name": "explosives/tnt.json"
+        }
+      ]
+    }
+  }
+}
