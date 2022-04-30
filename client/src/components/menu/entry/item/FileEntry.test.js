@@ -1,14 +1,14 @@
 import {fireEvent, render, screen, waitFor} from "@testing-library/react";
-import {mockErrorConsole, unmockErrorConsole, validateNoConsoleErrors} from "../../../tests/ConsoleMocks";
-import {Success} from "./FileEntry.stories";
-import {currentFileVar} from "../../../ApolloSetup";
+import {mockErrorConsole, unmockErrorConsole, validateNoConsoleErrors} from "../../../../tests/ConsoleMocks";
+import {Component} from "./FileEntry.stories";
+import {currentFileVar} from "../../../../ApolloSetup";
 
 describe('render states', () => {
     beforeEach(mockErrorConsole);
     afterEach(unmockErrorConsole);
 
-    test("success", async () => {
-        await render(<Success />);
+    test("component", async () => {
+        await render(<Component />);
 
         const button = screen.getByRole("button");
         expect(button).toHaveTextContent(/^some\/path\/to\/file.json$/);
@@ -20,7 +20,7 @@ describe('render states', () => {
 
 describe('interaction', () => {
     test("click button", async () => {
-        await render(<Success />);
+        await render(<Component />);
 
         fireEvent.click(screen.getByRole("button"));
 

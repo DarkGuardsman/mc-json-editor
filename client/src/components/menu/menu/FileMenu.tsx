@@ -1,9 +1,9 @@
-import FileExplorer from "../explorer/FileExplorer";
+import ProjectList from "../project/list/ProjectList";
 
 export default function FileMenu() {
     return (
         <div data-testid='explorer'>
-            <FileExplorer/>
+            <ProjectList/>
         </div>
     )
 }

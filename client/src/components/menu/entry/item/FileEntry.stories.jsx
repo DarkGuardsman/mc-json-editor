@@ -1,9 +1,9 @@
-import {createNewTestClient} from "../../../tests/ApolloTestSetup";
+import {createNewTestClient} from "../../../../tests/ApolloTestSetup";
 import {ApolloProvider} from "@apollo/client";
 import FileEntry from "./FileEntry";
 
 export default {
-    title: "Menu/FileEntry",
+    title: "Menu/FileEntry/Item",
     component: FileEntry
 }
 
@@ -16,4 +16,4 @@ const MockTemplate = (args) => {
     )
 }
 
-export const Success = MockTemplate.bind({});
+export const Component = MockTemplate.bind({});

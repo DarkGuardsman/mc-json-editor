@@ -1,0 +1,9 @@
+query ProjectFilesList($categoryId: Int!, $projectId: Int!) {
+    project(id: $projectId) {
+        content(id: $categoryId) {
+            entries {
+                name
+            }
+        }
+    }
+}

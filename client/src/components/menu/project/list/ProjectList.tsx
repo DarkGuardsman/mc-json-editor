@@ -1,22 +1,12 @@
-import {useQuery, gql} from "@apollo/client";
 import {isArray, isNil} from "lodash";
-import ProjectEntry from "../project/ProjectEntry";
-import {Maybe, Project, Query} from "../../../generated/graphql";
-
-const PROJECTS_QUERY = gql`
-    query ProjectsList {
-        projects {
-            id
-            name
-        }
-    }
-`
+import ProjectEntry from "../item/ProjectEntry";
+import {useProjectsListQuery} from "../../../../generated/graphql";
 
 /**
- *
+ * Generates a list of projects for the menu
  */
-export default function FileExplorer(): JSX.Element {
-    const {loading, error, data} = useQuery<Query>(PROJECTS_QUERY);
+export default function ProjectList(): JSX.Element {
+    const {loading, error, data} = useProjectsListQuery();
 
     if (loading) {
         return <p>Loading Projects...</p>
@@ -40,10 +30,14 @@ export default function FileExplorer(): JSX.Element {
                 {
                     projects
                         .map(project => {
-                            if(isNil(project)) {
+                            if (isNil(project)) {
                                 return <p className="error">null</p>
                             }
-                            return <ProjectEntry projectId={project.id} projectName={project.name}/>
+                            return (
+                                <li id={`project-${project.id}`}>
+                                    <ProjectEntry projectId={project.id} projectName={project.name}/>
+                                </li>
+                            )
                         })
                 }
             </ul>
