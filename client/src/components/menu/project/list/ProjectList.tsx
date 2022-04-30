@@ -26,21 +26,17 @@ export default function ProjectList(): JSX.Element {
 
     return (
         <div className="projects-menu warn">
-            <ul className='projects-list'>
-                {
-                    projects
-                        .map(project => {
-                            if (isNil(project)) {
-                                return <p className="error">null</p>
-                            }
-                            return (
-                                <li id={`project-${project.id}`}>
-                                    <ProjectEntry projectId={project.id} projectName={project.name}/>
-                                </li>
-                            )
-                        })
-                }
-            </ul>
+            {
+                projects
+                    .map(project => {
+                        if (isNil(project)) {
+                            return <p className="error">null</p>
+                        }
+                        return (
+                            <ProjectEntry projectId={project.id} projectName={project.name}/>
+                        )
+                    })
+            }
         </div>
     );
 }

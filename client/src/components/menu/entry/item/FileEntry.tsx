@@ -1,17 +1,18 @@
 import {currentFileVar} from "../../../../ApolloSetup";
-import {FiFolder, FiFile, FiChevronRight} from 'react-icons/fi'
+import styles from './FileEntry.module.css'
 
 interface FileEntryProps {
-    fileName: String
+    fileName: string
+    className: string
+    icon: JSX.Element
 }
 
-export default function FileEntry({fileName}: FileEntryProps): JSX.Element {
+export default function FileEntry({fileName, className, icon}: FileEntryProps): JSX.Element {
     return (
-        <div>
-            <FiChevronRight/>
-            <FiFolder/>
-            <FiFile/>
+        <div className={className}>
+            {icon}
             <button
+                className={styles.button}
                 onClick={() => currentFileVar(fileName)}
             >
                 {`${fileName}`}

@@ -14,9 +14,13 @@ export default function ContentCategoryMenu({categoryId, projectId, categoryName
     const [isExpanded, setIsExpanded] = useState(false);
     return (
         <div className={styles.div} key={`content-category-${categoryId}`}>
-            <div>
-                <ExpandIcon isExpanded={isExpanded} onClick={() => setIsExpanded(!isExpanded)}/>
-                <h3 className={styles.header}>{categoryName}</h3>
+            <div className={styles.header}>
+                <ExpandIcon
+                    className={styles.button}
+                    isExpanded={isExpanded}
+                    onClick={() => setIsExpanded(!isExpanded)}
+                />
+                <h3 className={styles.title}>{categoryName}</h3>
             </div>
             <FileEntryList categoryId={categoryId} projectId={projectId}/>
         </div>

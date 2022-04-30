@@ -1,4 +1,4 @@
-import {isNil, get, isArray} from "lodash";
+import {get, isArray} from "lodash";
 import ContentCategoryMenu from "../item/ContentCategoryMenu";
 import {ProjectFileSet, useProjectContentsListQuery} from "../../../../generated/graphql";
 import styles from "./ContentCategoryList.module.css"
@@ -9,7 +9,7 @@ interface ProjectEntryListProps {
 
 /**
  * Entry for showing projects with associated files nested in the explorer
- * @param {Number} projectId - unique id of the project
+ * @param {number} projectId - unique id of the project
  */
 export default function ContentCategoryList({projectId}: ProjectEntryListProps): JSX.Element {
     const {loading, error, data} = useProjectContentsListQuery({
