@@ -3,6 +3,7 @@ import {initialize, mswDecorator} from 'msw-storybook-addon';
 import projectListJson from "./mocks/ProjectsList.json";
 import projectFilesListJson from "./mocks/ProjectFilesList.json"
 import contentCategoryJson from "./mocks/ProjectContentsList.json"
+import '../src/App.css'
 
 // Initialize MSW https://storybook.js.org/addons/msw-storybook-addon
 initialize();
