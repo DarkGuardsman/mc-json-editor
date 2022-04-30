@@ -3,6 +3,12 @@
     margin: 0 0 5px 20px;
 }
 
+.icon {
+    margin-left: 5px;
+    margin-top: 2px;
+    float: left;
+}
+
 .container {
     padding: 0;
     margin: 0;

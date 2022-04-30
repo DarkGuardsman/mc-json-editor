@@ -1,20 +1,17 @@
-import {get, isArray, isNil} from "lodash";
-import FileEntry from "../item/FileEntry";
+import {get} from "lodash";
 import {
     ProjectFileEntry,
     useProjectFilesListQuery
 } from "../../../../generated/graphql";
-import {FiFolder, FiFile} from 'react-icons/fi'
 import styles from './FileEntryList.module.css'
 import {useMemo} from "react";
 import splitFileEntries, {FileDisplayNest} from "./FileListFunction";
+import FileEntryFolder from "../folder/FileEntryFolder";
 
 interface FileEntryListProps {
     categoryId: number,
     projectId: number
 }
-
-
 
 export default function FileEntryList({categoryId, projectId}: FileEntryListProps): JSX.Element {
     const {loading, error, data} = useProjectFilesListQuery({
@@ -56,18 +53,8 @@ export default function FileEntryList({categoryId, projectId}: FileEntryListProp
 
     return (
         <div className={styles.container}>
-            {
-                files.map(file => {
-                    const {name, isFolder} = file;
-                    return (
-                        <FileEntry
-                            fileName={name}
-                            className={styles.file}
-                            icon={isFolder ? <FiFolder className={styles.icon}/> : <FiFile className={styles.icon}/>}
-                        />
-                    );
-                })
-            }
+            <FileEntryFolder className={styles.file} folderName={"root"} path={"/"} files={files} />
         </div>
     );
 }
+
