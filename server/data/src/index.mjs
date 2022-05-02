@@ -16,9 +16,12 @@ const typeDefs = mergeTypeDefs(documentNodes);
 const categories = [
     //TODO specify by project type (Forge Mod) and version (1.12.2). As each type-version combo will have different content specs
     {
-        id: 0,
-        name: "Shaped Crafting",
+        name: "Recipe/Crafting/Shaped",
         folderPrefix: "/assets/#{projectId}/recipes",
+        spec: {
+            style: "Minecraft:Forge",
+            version: "1.12.2"
+        },
         detection: {
             mode: "json_field",
             fields: [
@@ -30,9 +33,29 @@ const categories = [
         }
     },
     {
-        id: 1,
-        name: "Shapeless Crafting",
+        name: "Recipe/Crafting/ICBM Explosive",
         folderPrefix: "/assets/#{projectId}/recipes",
+        spec: {
+            style: "Minecraft:Forge",
+            version: "1.12.2"
+        },
+        detection: {
+            mode: "json_field",
+            fields: [
+                {
+                    id: "type",
+                    regex: "icbmclassic:explosive"
+                }
+            ]
+        }
+    },
+    {
+        name: "Recipe/Crafting/Shapeless",
+        folderPrefix: "/assets/#{projectId}/recipes",
+        spec: {
+            style: "Minecraft:Forge",
+            version: "1.12.2"
+        },
         detection: {
             mode: "json_field",
             fields: [
@@ -44,33 +67,48 @@ const categories = [
         }
     },
     {
-        id: 2,
-        folderPrefix: "/assets/#{projectId}/models/item",
         name: "Model/Item",
+        folderPrefix: "/assets/#{projectId}/models/item",
+        spec: {
+            style: "Minecraft:Forge",
+            version: "1.12.2"
+        },
         detection: {
             mode: "regex",
             alg: '\\/assets\\/\\w+\\/models\\/item'
         }
     },
     {
-        id: 3,
-        folderPrefix: "/assets/#{projectId}/models/block",
+
         name: "Model/Block",
+        folderPrefix: "/assets/#{projectId}/models/block",
+        spec: {
+            style: "Minecraft:Forge",
+            version: "1.12.2"
+        },
         detection: {
             mode: "regex",
             alg: '\\/assets\\/\\w+\\/models\\/block'
         }
     },
     {
-        id: 3,
-        folderPrefix: "/assets/#{projectId}/blockstates",
         name: "Model/States",
+        folderPrefix: "/assets/#{projectId}/blockstates",
+        spec: {
+            style: "Minecraft:Forge",
+            version: "1.12.2"
+        },
         detection: {
             mode: "regex",
             alg: '\\/assets\\/\\w+\\/blockstates'
         }
     }
-]
+].map((entry, index) => {
+    return {
+        ...entry,
+        id: index
+    }
+})
 
 //Setup resolvers
 const resolvers = {
