@@ -70,7 +70,7 @@ export default class FileTracker {
     }
 
     getFiles(categoryId) {
-        return Lodash.values(this.fileMap) //TODO return only for a specific category
+        return Lodash.values(this.fileMap).filter(entry => entry.categoryId === categoryId) //TODO store in map better for faster lookups
     }
 
     getFileSets() {
