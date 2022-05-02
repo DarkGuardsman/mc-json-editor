@@ -34,7 +34,8 @@ export function startFileWatcher(projects) {
 }
 
 function startWatchingProject(project) {
-    const rootPath = `${project.path}/src/main/resources/**/*.json`;
+    const resourceFolder = `${project.path}/src/main/resources`
+    const rootPath = `${resourceFolder}/**/*.json`;
 
     //Setup tracker
     const fileTracker = new FileTracker(project);
@@ -46,19 +47,14 @@ function startWatchingProject(project) {
     })
         //File discovered or created
         .on('add', (fullPath, stats) => {
-            //const path = fullPath.replace(rootPath, "");
-            //const fileId = stats.ino;
-            //const contentChangedTime = stats.ctimeMs;
-            //const fileChangeTime = stats.mtimeMs;
-            //console.log('Add', path);
-
-            fileTracker.addFile(fullPath, stats);
+            fileTracker.addFile({
+                fullPath,
+                stats,
+                folderRoot: resourceFolder
+            });
         })
         .on('change', (fullPath, stats) => {
-            const path = fullPath.replace(rootPath, "");
-            const fileId = stats.ino;
-            //console.log('Change', path, `ID: ${fileId}`);
-            fileTracker.onFileChanged(fullPath);
+            fileTracker.onFileChanged(stats.ino);
         })
         //File moved or deleted
         .on('unlink', (fullPath) => {

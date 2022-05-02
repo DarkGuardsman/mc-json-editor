@@ -1,27 +1,36 @@
 import Lodash from "lodash";
 
+const itemModelRegex = /\/assets\/\w+\/models\/item/
+
 export default class FileTracker {
 
     constructor(project) {
         this.project = project;
         this.fileMap = {};
-        this.fileScanSet = new Set();
     }
 
-    addFile(fullPath, stats) {
-        this.fileMap[fullPath] = {
+    addFile(entry) {
+        const key = entry.stats.ino;
+        const fullPath = entry.fullPath.replaceAll("\\", "/");
+        this.fileMap[key] = {
             fullPath,
-            stats
-        }
-        this.onFileChanged(fullPath);
+            path: fullPath.replace(entry.folderRoot, "")
+        };
+        //console.log(key, this.fileMap[key]);
+        this.onFileChanged(key);
     }
 
-    onFileChanged(fullPath) {
-        this.fileScanSet.add(fullPath);
+    onFileChanged(key) {
+        const entry = this.fileMap[key];
+        const {path} = entry;
+
+        if(itemModelRegex.test(path)) {
+            console.log("ItemModel", path);
+        }
     }
 
     removeFile(fullPath) {
-        this.fileMap.set(fullPath, undefined);
+        delete this.fileMap[fullPath];
     }
 
     getFiles(categoryId) {
@@ -39,9 +48,5 @@ export default class FileTracker {
                 }
             }
         ]
-    }
-
-    getFilesToScan() {
-        return this.fileScanSet;
     }
 }

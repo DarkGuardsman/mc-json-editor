@@ -44,7 +44,7 @@ const resolvers = {
             if(!Lodash.isArray(files)) {
                 return [];
             }
-            return files.map(({fullPath, stats}) => ({name: fullPath})); //TODO include more metadata about the file
+            return files.map(entry => ({name: entry.path})); //TODO include more metadata about the file
         }
     },
     Query: {
