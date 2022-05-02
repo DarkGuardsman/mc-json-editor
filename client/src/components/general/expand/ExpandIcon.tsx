@@ -15,7 +15,7 @@ interface ExpandIconProps {
  * @param {MouseEventHandler<HTMLButtonElement>} onClick - callback for when clicked, can be used to update state
  */
 export default function ExpandIcon({isExpanded, onClick, className}: ExpandIconProps) {
-    if (isExpanded) {
+    if (!isExpanded) {
         return (
             <button onClick={onClick} className={`${styles.button} ${className}`}>
                 <FiChevronRight/>

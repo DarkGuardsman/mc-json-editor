@@ -2,6 +2,7 @@ import FileEntryList from "../../entry/list/FileEntryList";
 import styles from "./ContentCategoryMenu.module.css"
 import ExpandIcon from "../../../general/expand/ExpandIcon";
 import {useState} from "react";
+import ExpandToggle from "../../../general/expand/ExpandToggle";
 
 
 interface TemplateEntryProps {
@@ -22,7 +23,9 @@ export default function ContentCategoryMenu({categoryId, projectId, categoryName
                 />
                 <h3 className={styles.title}>{categoryName}</h3>
             </div>
-            <FileEntryList categoryId={categoryId} projectId={projectId}/>
+            <ExpandToggle isExpanded={isExpanded} >
+                <FileEntryList categoryId={categoryId} projectId={projectId}/>
+            </ExpandToggle>
         </div>
     );
 }
