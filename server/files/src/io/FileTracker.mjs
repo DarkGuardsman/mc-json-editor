@@ -1,4 +1,5 @@
 import Lodash from "lodash";
+import {getContentCategories} from "./ContentCategoryClient.mjs";
 
 const itemModelRegex = /\/assets\/\w+\/models\/item/
 
@@ -24,8 +25,22 @@ export default class FileTracker {
         const entry = this.fileMap[key];
         const {path} = entry;
 
-        if(itemModelRegex.test(path)) {
-            console.log("ItemModel", path);
+        const possibleCategories = getContentCategories().filter(category => {
+            if (!Lodash.isNil(category.detection)) {
+                if (category.detection.mode === "Regex") {
+                    const regex = new RegExp(category.detection.alg); //TODO optimize
+                    return regex.test(path);
+                }
+            }
+        });
+
+        if (possibleCategories.length > 1) {
+            console.warn("Detected more than 1 possible category for file entry", entry);
+        }
+
+        this.fileMap[key] = {
+            ...this.fileMap[key],
+            categoryId: Lodash.head(possibleCategories)
         }
     }
 

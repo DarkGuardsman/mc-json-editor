@@ -31,7 +31,7 @@ const categories = [
         name: "Item Model",
         detection: {
             mode: "Regex",
-            alg: "\\/assets\\/\\w+\\/models\\/item"
+            alg: '\\/assets\\/\\w+\\/models\\/item'
         }
     }
 ]
