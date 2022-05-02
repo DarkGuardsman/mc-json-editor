@@ -48,18 +48,24 @@ export default function splitFileEntries(rawFileList: ProjectFileEntry[]): FileD
  */
 function mapInputData(rawFileList: ProjectFileEntry[]): FileDisplayEntry[] {
     return rawFileList.map(entry => {
-        const split = entry.name.split("/");
+        //Fix starting with slash
+        const name = entry.name.startsWith("/") ? entry.name.substring(1, entry.name.length) : entry.name;
+
+        //Split into file path
+        const split = name.split("/");
+
+        //If we have more than 1 split we are a folder
         const isFolder = split.length > 1;
         if (isFolder) {
             return {
-                fileName: entry.name,
+                fileName: name,
                 current : head(split),
                 strings: split.slice(1, split.length)
             }
         }
         return {
-            fileName: entry.name,
-            current: entry.name
+            fileName: name,
+            current: name
         }
     })
 }

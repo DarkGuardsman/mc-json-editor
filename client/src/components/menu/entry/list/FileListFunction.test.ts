@@ -185,28 +185,28 @@ test("single file with multi nesting", () => {
 test("maps files", () => {
     const inputData = [
         {
-            "name": "crafting/iron_rod.json"
+            "name": "/crafting/iron_rod.json"
         },
         {
-            "name": "explosives/tier1/fire.json"
+            "name": "/explosives/tier1/fire.json"
         },
         {
-            "name": "explosives/tier1/condensed.json"
+            "name": "/explosives/tier1/condensed.json"
         },
         {
-            "name": "explosives/tier2/tnt3.json"
+            "name": "/explosives/tier2/tnt3.json"
         },
         {
-            "name": "explosives/tier2/tnt5.json"
+            "name": "/explosives/tier2/tnt5.json"
         },
         {
-            "name": "explosives/tnt_base.json"
+            "name": "/explosives/tnt_base.json"
         },
         {
-            "name": "smelting_iron.json"
+            "name": "/smelting_iron.json"
         },
         {
-            "name": "cut_log.json"
+            "name": "/cut_log.json"
         }
     ];
 
