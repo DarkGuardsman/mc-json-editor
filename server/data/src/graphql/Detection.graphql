@@ -1,4 +1,5 @@
-type ContentCategoryDetection {
+type Detection {
     mode: String! # detection mode to use, Ex: Regex
     alg: String # Regex alg to use
+    fields: [DetectionField] # fields to use for detection types
 }

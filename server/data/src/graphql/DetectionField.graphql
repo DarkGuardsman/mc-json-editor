@@ -1,0 +1,4 @@
+type DetectionField {
+    id: String!
+    regex: String!
+}
