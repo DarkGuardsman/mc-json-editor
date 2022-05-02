@@ -6,7 +6,7 @@ import {
 import styles from './FileEntryList.module.css'
 import {useMemo} from "react";
 import splitFileEntries, {FileDisplayNest} from "./FileListFunction";
-import FileEntryFolder from "../folder/FileEntryFolder";
+import FileEntryFolderContents from "../folder/FileEntryFolderContents";
 
 interface FileEntryListProps {
     categoryId: number,
@@ -53,7 +53,7 @@ export default function FileEntryList({categoryId, projectId}: FileEntryListProp
 
     return (
         <div className={styles.container}>
-            <FileEntryFolder className={styles.file} folderName={"root"} path={"/"} files={files} />
+            <FileEntryFolderContents files={files} />
         </div>
     );
 }

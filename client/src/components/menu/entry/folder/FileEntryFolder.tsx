@@ -1,8 +1,7 @@
 import {FileDisplayNest} from "../list/FileListFunction";
-import {FiFile, FiFolder} from "react-icons/fi";
-import FileEntry from "../item/FileEntry";
-import {isNil} from "lodash";
+import {FiFolder} from "react-icons/fi";
 import styles from './FileEntryFolder.module.css'
+import FileEntryFolderContents from "./FileEntryFolderContents";
 
 interface FileEntryFolderProps {
     folderName: string,
@@ -18,27 +17,7 @@ export default function FileEntryFolder({folderName, files, className}: FileEntr
                 <FiFolder className={styles.icon}/>
                 <h4>{folderName}</h4>
             </div>
-            {
-                isNil(files) ? "No Files" :
-                files.map(({name, path, isFolder, files, file}) => {
-                    if(isFolder) {
-                        return (
-                            <FileEntryFolder className={styles.file} folderName={name} path={path} files={files}/>
-                        )
-                    }
-                    else if(isNil(file)) {
-                        return `Invalid File Entry: ${name}`
-                    }
-                    return (
-                        <FileEntry
-                            displayName={name}
-                            fileName={file}
-                            className={styles.file}
-                            icon={isFolder ? <FiFolder className={styles.icon}/> : <FiFile className={styles.icon}/>}
-                        />
-                    );
-                })
-            }
+            <FileEntryFolderContents files={files} />
         </div>
     )
 }
