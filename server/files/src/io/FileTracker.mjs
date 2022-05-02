@@ -55,12 +55,12 @@ export default class FileTracker {
         const category = Lodash.head(possibleCategories);
 
         if (!Lodash.isNil(category)) {
-            //console.log(path, category.name);
-        }
-
-        this.fileMap[key] = {
-            ...this.fileMap[key],
-            categoryId: category?.id
+            const folderPrefix = category.folderPrefix.replace(`#{projectId}`, this.project.projectId);
+            this.fileMap[key] = {
+                ...this.fileMap[key],
+                path: path.replace(folderPrefix, ""),
+                categoryId: category?.id
+            }
         }
     }
 

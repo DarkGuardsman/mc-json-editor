@@ -51,6 +51,7 @@ function fetchContentCategories() {
                     contentCategories {
                         id
                         name
+                        folderPrefix
                         detection {
                             mode
                             alg

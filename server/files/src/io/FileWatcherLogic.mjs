@@ -34,8 +34,8 @@ export function startFileWatcher(projects) {
 }
 
 function startWatchingProject(project) {
-    const resourceFolder = `${project.path}/src/main/resources`
-    const rootPath = `${resourceFolder}/**/*.json`;
+    const resourceFolder = `${project.path}${project.type.watchFolder}`
+    const rootPath = `${resourceFolder}/**/*.json`; //TODO configure
 
     //Setup tracker
     const fileTracker = new FileTracker(project);
