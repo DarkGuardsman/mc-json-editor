@@ -29,7 +29,16 @@ const categories = [
     },
     {
         id: 1,
-        name: "Shapeless Crafting"
+        name: "Shapeless Crafting",
+        detection: {
+            mode: "json_field",
+            fields: [
+                {
+                    id: "type",
+                    regex: "minecraft:crafting_shapeless"
+                }
+            ]
+        }
     },
     {
         id: 2,
