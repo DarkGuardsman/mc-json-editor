@@ -1,4 +1,5 @@
 import Lodash from "lodash";
+import fileSystem from 'fs';
 import {getContentCategories} from "./ContentCategoryClient.mjs";
 
 const itemModelRegex = /\/assets\/\w+\/models\/item/
@@ -25,22 +26,42 @@ export default class FileTracker {
         const entry = this.fileMap[key];
         const {path} = entry;
 
+        const rawFile = fileSystem.readFileSync(entry.fullPath, 'utf8');
+        const jsonFile = JSON.parse(rawFile);
+
         const possibleCategories = getContentCategories().filter(category => {
             if (!Lodash.isNil(category.detection)) {
-                if (category.detection.mode === "Regex") {
-                    const regex = new RegExp(category.detection.alg); //TODO optimize
-                    return regex.test(path);
+                const {mode, fields} = category.detection
+                switch(mode) {
+                    case "regex" : {
+                        const regex = new RegExp(category.detection.alg); //TODO optimize
+                        return regex.test(path);
+                    }
+                    case "json_field": {
+                        if(Lodash.isArray(fields)) {
+                            //Return true if all fields return false (with false meaning not failed)
+                            return !fields.some(field => {
+                                const {id, regex} = field;
+                                const fieldValue = jsonFile[id];
+                                return !new RegExp(regex).test(fieldValue);//TODO optimize
+                            });
+                        }
+                        return false;
+                    }
+                    default: return false;
                 }
             }
         });
 
-        if (possibleCategories.length > 1) {
-            console.warn("Detected more than 1 possible category for file entry", entry);
+        const category = Lodash.head(possibleCategories);
+
+        if(!Lodash.isNil(category)) {
+            console.log(path, category);
         }
 
         this.fileMap[key] = {
             ...this.fileMap[key],
-            categoryId: Lodash.head(possibleCategories)
+            categoryId: category?.id
         }
     }
 
