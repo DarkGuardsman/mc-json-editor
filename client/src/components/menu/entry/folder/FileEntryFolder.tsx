@@ -2,6 +2,9 @@ import {FileDisplayNest} from "../list/FileListFunction";
 import {FiFolder} from "react-icons/fi";
 import styles from './FileEntryFolder.module.css'
 import FileEntryFolderContents from "./FileEntryFolderContents";
+import {useState} from "react";
+import ExpandIcon from "../../../general/expand/ExpandIcon";
+import ExpandToggle from "../../../general/expand/ExpandToggle";
 
 interface FileEntryFolderProps {
     folderName: string,
@@ -10,14 +13,22 @@ interface FileEntryFolderProps {
     className?: string
 }
 
-export default function FileEntryFolder({folderName, files, className}: FileEntryFolderProps) : JSX.Element {
+export default function FileEntryFolder({folderName, files, className}: FileEntryFolderProps): JSX.Element {
+    const [isExpanded, setIsExpanded] = useState(false);
     return (
         <div className={className}>
-            <div>
+            <div className={styles.header}>
+                <ExpandIcon
+                    className={styles.button}
+                    isExpanded={isExpanded}
+                    onClick={() => setIsExpanded(!isExpanded)}
+                />
                 <FiFolder className={styles.icon}/>
-                <h4>{folderName}</h4>
+                <h4 className={styles.title}>{folderName}</h4>
             </div>
-            <FileEntryFolderContents files={files} />
+            <ExpandToggle isExpanded={isExpanded}>
+                <FileEntryFolderContents files={files}/>
+            </ExpandToggle>
         </div>
     )
 }
