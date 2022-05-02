@@ -22,7 +22,13 @@ export default function FileEntryFolderContents({files}: FileEntryFolderContents
                    files.map(({name, path, isFolder, files, file}) => {
                        if(isFolder) {
                            return (
-                               <FileEntryFolder className={styles.file} folderName={name} path={path} files={files}/>
+                               <FileEntryFolder
+                                   key={`folder-${path}`}
+                                   className={styles.file}
+                                   folderName={name}
+                                   path={path}
+                                   files={files}
+                               />
                            )
                        }
                        else if(isNil(file)) {
@@ -30,6 +36,7 @@ export default function FileEntryFolderContents({files}: FileEntryFolderContents
                        }
                        return (
                            <FileEntry
+                               key={`file-${file}`}
                                displayName={name}
                                fileName={file}
                                className={styles.file}
