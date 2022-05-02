@@ -25,6 +25,14 @@ const categories = [
     {
         id: 2,
         name: "Shapeless Crafting"
+    },
+    {
+        id: 3,
+        name: "Item Model",
+        detection: {
+            mode: "Regex",
+            alg: "\\/assets\\/\\w+\\/models\\/item"
+        }
     }
 ]
 

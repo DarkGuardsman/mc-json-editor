@@ -1,0 +1,4 @@
+type ContentCategoryDetection {
+    mode: String! # detection mode to use, Ex: Regex
+    alg: String # Regex alg to use
+}

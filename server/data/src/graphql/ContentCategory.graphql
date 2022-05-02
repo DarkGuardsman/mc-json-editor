@@ -2,4 +2,5 @@
 type ContentCategory @key(fields: "id") {
     id: Int! # database id
     name: String!# display name
+    detection: ContentCategoryDetection # how to detect content type
 }
