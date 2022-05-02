@@ -1,4 +1,5 @@
 import fetch from "cross-fetch";
+import Lodash from "lodash";
 
 let watchTimer;
 
@@ -16,7 +17,12 @@ export function queryForContentData() {
             if (errors) {
                 console.log('ContentCategories Query resulted in errors:', errors);
             } else {
-                currentData = data.contentCategories;
+                currentData = data.contentCategories.sort((a, b) => {
+                    const sortIndexA = Lodash.isNil(a.sortIndex) ? 0 : a.sortIndex;
+                    const sortIndexB = Lodash.isNil(b.sortIndex) ? 0 : a.sortIndex;
+
+                    return sortIndexB - sortIndexA;
+                });
             }
 
         } else {
@@ -48,6 +54,10 @@ function fetchContentCategories() {
                         detection {
                             mode
                             alg
+                            fields {
+                                id
+                                regex
+                            }
                         }
                      }
                 }

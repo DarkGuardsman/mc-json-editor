@@ -3,4 +3,5 @@ type ContentCategory @key(fields: "id") {
     id: Int! # database id
     name: String!# display name
     detection: Detection # how to detect content type
+    sortIndex: Int # index to sort, some detection logic can catch the same files so first in list wins
 }
