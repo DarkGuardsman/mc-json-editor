@@ -16,21 +16,26 @@ const typeDefs = mergeTypeDefs(documentNodes);
 const categories = [
     {
         id: 0,
-        name: "Unspecified"
+        name: "Shaped Crafting",
+        detection: {
+            mode: "json_field",
+            fields: [
+                {
+                    id: "type",
+                    regex: "minecraft:crafting_shaped"
+                }
+            ]
+        }
     },
     {
         id: 1,
-        name: "Shaped Crafting"
-    },
-    {
-        id: 2,
         name: "Shapeless Crafting"
     },
     {
-        id: 3,
+        id: 2,
         name: "Item Model",
         detection: {
-            mode: "Regex",
+            mode: "regex",
             alg: '\\/assets\\/\\w+\\/models\\/item'
         }
     }
