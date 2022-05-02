@@ -2,8 +2,6 @@ import Lodash from "lodash";
 import fileSystem from 'fs';
 import {getContentCategories} from "./ContentCategoryClient.mjs";
 
-const itemModelRegex = /\/assets\/\w+\/models\/item/
-
 export default class FileTracker {
 
     constructor(project) {
@@ -32,13 +30,13 @@ export default class FileTracker {
         const possibleCategories = getContentCategories().filter(category => {
             if (!Lodash.isNil(category.detection)) {
                 const {mode, fields} = category.detection
-                switch(mode) {
+                switch (mode) {
                     case "regex" : {
                         const regex = new RegExp(category.detection.alg); //TODO optimize
                         return regex.test(path);
                     }
                     case "json_field": {
-                        if(Lodash.isArray(fields)) {
+                        if (Lodash.isArray(fields)) {
                             //Return true if all fields return false (with false meaning not failed)
                             return !fields.some(field => {
                                 const {id, regex} = field;
@@ -48,15 +46,16 @@ export default class FileTracker {
                         }
                         return false;
                     }
-                    default: return false;
+                    default:
+                        return false;
                 }
             }
         });
 
         const category = Lodash.head(possibleCategories);
 
-        if(!Lodash.isNil(category)) {
-            console.log(path, category);
+        if (!Lodash.isNil(category)) {
+            //console.log(path, category.name);
         }
 
         this.fileMap[key] = {
@@ -74,15 +73,16 @@ export default class FileTracker {
     }
 
     getFileSets() {
-        //TODO ask the data server for a list of specifications and matching categories.
-        //  We need a way to ID files based on location and contents.
-        //  This needs to be driven by the data server and not the file server
-        return [
-            {
+        return Lodash.uniq(
+            Lodash.values(this.fileMap)
+                .map(entry => entry.categoryId)
+                .filter((id) => !Lodash.isNil(id))
+        ).map(id => {
+            return {
                 category: {
-                    id: 0 //Default to unspecified
+                    id
                 }
             }
-        ]
+        });
     }
 }

@@ -27,7 +27,7 @@ const resolvers = {
                         ...entry,
                         parentId: parent.id
                     }
-                })
+                });
         },
         content: async (parent, {id}, {dataSources}, info) => {
             const category = Lodash.head(getFileSets(parent.id).filter(fileSet => fileSet.category.id === id));
