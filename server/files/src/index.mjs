@@ -1,106 +1,33 @@
-import {loadTypedefs} from "@graphql-tools/load";
-import {GraphQLFileLoader} from "@graphql-tools/graphql-file-loader";
-import {mergeTypeDefs} from "@graphql-tools/merge";
-import {ApolloServer} from "apollo-server";
-import {buildSubgraphSchema} from "@apollo/subgraph";
-import Lodash from 'lodash';
-const {GraphQLJSON} = 'graphql-type-json';
+import {stopFileWatcher, startFileWatcher} from "./io/FileWatcherLogic.mjs";
+import {createServer} from "./server/Server.mjs";
+import {createTerminus} from "@godaddy/terminus";
+import {SERVER_PORT} from "./EnvVars.mjs";
+import {getProjectList, loadConfigs} from "./config/AppConfig.mjs";
 
-const SERVER_PORT = process.env.PORT;
+await loadConfigs();
 
-const sources = await loadTypedefs('./src/graphql/**/*.graphql', {
-    loaders: [new GraphQLFileLoader()]
-});
-const documentNodes = sources.map(source => source.document);
-const typeDefs = mergeTypeDefs(documentNodes);
+//Setup server
+const server = await createServer();
 
-const projects = [
-    {
-        id: 0,
-        name: "ICBM"
-    }
-];
+//Start file watcher
+startFileWatcher(getProjectList());
 
-const projectFileSets = [
-    {
-        projectId: 0,
-        category: {
-            id: 0
+//Setup health check and termination handling
+createTerminus(server.httpServer, {
+    signal: 'SIGINT',
+    healthChecks: {
+        '/healthcheck': () => {
+            return Promise.resolve();
         }
     },
-    {
-        projectId: 0,
-        category: {
-            id: 1
-        }
-    }
-];
-
-
-
-const files = [
-    {
-        projectId: 0,
-        categoryId: 0,
-        name: "crafting/iron_rod.json"
-    },
-    {
-        projectId: 0,
-        categoryId: 1,
-        name: "explosives/tnt.json"
-    },
-    {
-        projectId: 0,
-        categoryId: 1,
-        name: "explosives/condensed.json"
-    }
-]
-
-function getProjects() {
-    return projects.map(project => ({id: project.id, name: project.name}));
-}
-
-function getProject(id) {
-    return Lodash.head(getProjects().filter(project => project.id === id));
-}
-
-
-//Setup resolvers
-const resolvers = {
-    JSON: GraphQLJSON,
-    Project: {
-        contents: async (parent, args, {dataSources}, info) => {
-            return projectFileSets.filter(set => set.projectId === parent.id)
-        },
-        content: async (parent, {id}, {dataSources}, info) => {
-            return Lodash.head(projectFileSets.filter(set => set.projectId === parent.id && set.category.id === id))
-        },
-    },
-    ProjectFileSet : {
-        entries: async  (parent) => {
-            return files
-                .filter(file => file.categoryId === parent.category.id && file.projectId === parent.projectId)
-                .map(file => ({name: file.name}));
-        }
-    },
-    Query: {
-        projects: async (parent, args, {dataSources}, info) => getProjects(),
-        project: async  (parent, {id}, {dataSources}, info) => getProject(id)
-    }
-};
-
-const server = new ApolloServer({
-    schema: buildSubgraphSchema({
-        typeDefs,
-        resolvers
-    }),
-    dataSources: () => ({}),
-    context: ({req}) => {
-        return {
-            headers: req.headers
-        }
+    onSignal: () => {
+        return Promise.all([
+            stopFileWatcher
+        ]);
     }
 });
+
+//Start server
 server.listen(SERVER_PORT).then(({url}) => {
     console.log(`Server ready at ${url}`);
-})
+});

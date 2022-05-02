@@ -16,10 +16,14 @@ const typeDefs = mergeTypeDefs(documentNodes);
 const categories = [
     {
         id: 0,
-        name: "Shaped Crafting"
+        name: "Unspecified"
     },
     {
         id: 1,
+        name: "Shaped Crafting"
+    },
+    {
+        id: 2,
         name: "Shapeless Crafting"
     }
 ]
@@ -44,7 +48,7 @@ const server = new ApolloServer({
     }),
     dataSources: () => ({}),
     context: ({req}) => {
-        console.log("reg", JSON.stringify(req.body, null, 2));
+        //console.log("reg", JSON.stringify(req.body, null, 2)); //Debug code for request message
         return {
             headers: req.headers
         }
