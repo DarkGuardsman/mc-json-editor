@@ -5,5 +5,5 @@ type ContentCategory @key(fields: "id") {
     folderPrefix: String! # prefix of the folder path files will be found inside
     detection: Detection # how to detect content type
     sortIndex: Int # index to sort, some detection logic can catch the same files so first in list wins
-
+    spec: ContentCategorySpec!
 }

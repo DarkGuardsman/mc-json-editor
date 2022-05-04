@@ -1,15 +1,18 @@
-import chokidar from "chokidar";
-import FileTracker from "./FileTracker.mjs";
+import chokidar, {FSWatcher} from "chokidar";
+import FileTracker from "./FileTracker.js";
 import Lodash from "lodash";
+import {ProjectFileSet} from "../../resolvers-types";
+import WatchedFile from "../types/WatchedFile";
+import ProjectConfig from "../types/ProjectConfig";
 
 //All open watchers
-const watchers = [];
+const watchers: FSWatcher[] = [];
 
 //All open file trackers
 const fileTrackers = new Map();
 
 
-export function getFiles(projectId, categoryId) {
+export function getFiles(projectId, categoryId): WatchedFile[] {
     const fileTracker = fileTrackers.get(projectId);
     if(Lodash.isNil(fileTracker)) {
         throw new Error(`Unknown project with id ${projectId}`);
@@ -17,7 +20,7 @@ export function getFiles(projectId, categoryId) {
     return fileTracker.getFiles(categoryId);
 }
 
-export function getFileSets(projectId) {
+export function getFileSets(projectId): ProjectFileSet[] {
     const fileTracker = fileTrackers.get(projectId);
     if(Lodash.isNil(fileTracker)) {
         throw new Error(`Unknown project with id ${projectId}`);
@@ -29,12 +32,12 @@ export function getFileSets(projectId) {
  *
  * @param projects
  */
-export function startFileWatcher(projects) {
+export function startFileWatcher(projects: ProjectConfig[]) {
     projects.forEach(project => startWatchingProject(project));
 }
 
-function startWatchingProject(project) {
-    const resourceFolder = `${project.path}${project.type.watchFolder}`
+function startWatchingProject(project: ProjectConfig) {
+    const resourceFolder = `${project.path}${project.spec.watchFolder}`
     const rootPath = `${resourceFolder}/**/*.json`; //TODO configure
 
     //Setup tracker
@@ -53,8 +56,8 @@ function startWatchingProject(project) {
                 folderRoot: resourceFolder
             });
         })
-        .on('change', (fullPath, stats) => {
-            fileTracker.onFileChanged(stats.ino);
+        .on('change', (fullPath) => {
+            fileTracker.onFileChanged(fullPath);
         })
         //File moved or deleted
         .on('unlink', (fullPath) => {

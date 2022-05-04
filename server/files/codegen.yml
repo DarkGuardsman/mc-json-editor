@@ -1,0 +1,10 @@
+schema: http://localhost:6001/graphql
+documents: ./src/**/*.graphql
+generates:
+  ./resolvers-types.ts:
+    config:
+      useIndexSignature: true
+    plugins:
+      - typescript
+      - typescript-resolvers
+      - typescript-operations

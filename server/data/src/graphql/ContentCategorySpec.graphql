@@ -1,0 +1,4 @@
+type ContentCategorySpec {
+    id: String! # High level specification for the content category
+    version: String! # version of the specification
+}

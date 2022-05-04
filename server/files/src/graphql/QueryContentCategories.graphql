@@ -1,0 +1,15 @@
+query GatherContentCategories {
+    contentCategories {
+        id
+        name
+        folderPrefix
+        detection {
+            mode
+            alg
+            fields {
+                id
+                regex
+            }
+        }
+    }
+}

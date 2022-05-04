@@ -1,16 +1,9 @@
+import ProjectConfig from "../types/ProjectConfig";
 
-let projectList = [];
+let projectList: ProjectConfig[] = [];
 
-export function getProjectList() {
+export function getProjectList(): ProjectConfig[] {
     return projectList;
-}
-
-export function addProject(projectPath) {
-
-}
-
-export function removeProject(projectId) {
-
 }
 
 export async function loadConfigs() {
@@ -19,12 +12,15 @@ export async function loadConfigs() {
         {
             id: 0, //Locally generated
             name: "ICBM", //User defined
-            type: {
-                id: "Minecraft/Forge", //User defined, dropdown menu
+            spec: {
+                id: 0,
+                name: "Minecraft/Forge", //User defined, dropdown menu
                 watchFolder: "/src/main/resources", //TODO pull from data server
                 version: "1.12.2" //User defined
             },
-            projectId: "icbmclassic", //User defined or discovered when added
+            metadata: {
+                projectId: "icbmclassic"
+            },
             path: "F:/github/1.12/ICBM-Classic" //User defined
         }
     ]

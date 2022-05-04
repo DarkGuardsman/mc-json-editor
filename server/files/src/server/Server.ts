@@ -5,22 +5,23 @@ import Lodash from "lodash";
 import {GraphQLJSON} from "graphql-type-json";
 import {ApolloServer} from "apollo-server";
 import {buildSubgraphSchema} from "@apollo/subgraph";
-import {getProjectList} from "../config/AppConfig.mjs";
-import {getFiles, getFileSets} from "../io/FileWatcherLogic.mjs";
+import {getProjectList} from "../config/AppConfig.js";
+import {getFiles, getFileSets} from "../io/FileWatcherLogic.js";
+import {Resolvers} from "../../resolvers-types";
 
 function getProjects() {
     return getProjectList().map(project => ({id: project.id, name: project.name}));
 }
 
-function getProject(id) {
+function getProject(id: number) {
     return Lodash.head(getProjects().filter(project => project.id === id));
 }
 
 //Setup resolvers
-const resolvers = {
+const resolvers: Resolvers = {
     JSON: GraphQLJSON,
     Project: {
-        contents: async (parent, args, {dataSources}, info) => {
+        contents: async (parent) => {
             return getFileSets(parent.id)
                 .map(entry => {
                     return {
@@ -29,18 +30,18 @@ const resolvers = {
                     }
                 });
         },
-        content: async (parent, {id}, {dataSources}, info) => {
+        content: async (parent, {id}, ) => {
             const category = Lodash.head(getFileSets(parent.id).filter(fileSet => fileSet.category.id === id));
             return {
                 ...category,
-                projectId: parent.id
+                parentId: parent.id
             }
         },
     },
     ProjectFileSet: {
         entries: async (parent) => {
             const categoryId = parent.category.id;
-            const files = getFiles(parent.projectId, categoryId);
+            const files = getFiles(parent.parentId, categoryId);
             if(!Lodash.isArray(files)) {
                 return [];
             }
@@ -48,8 +49,8 @@ const resolvers = {
         }
     },
     Query: {
-        projects: async (parent, args, {dataSources}, info) => getProjects(),
-        project: async (parent, {id}, {dataSources}, info) => getProject(id)
+        projects: async () => getProjects(),
+        project: async (_, {id}) => getProject(id)
     }
 };
 

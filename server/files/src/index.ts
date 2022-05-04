@@ -1,13 +1,18 @@
-import {stopFileWatcher, startFileWatcher} from "./io/FileWatcherLogic.mjs";
-import {createServer} from "./server/Server.mjs";
+import {stopFileWatcher, startFileWatcher} from "./io/FileWatcherLogic.js";
+import {createServer} from "./server/Server.js";
 import {createTerminus} from "@godaddy/terminus";
-import {SERVER_PORT} from "./EnvVars.mjs";
-import {getProjectList, loadConfigs} from "./config/AppConfig.mjs";
+import {SERVER_PORT} from "./EnvVars.js";
+import {getProjectList, loadConfigs} from "./config/AppConfig.js";
 import {
     getContentCategories,
     queryForContentData,
     startWatchingContentCategoryData
-} from "./io/ContentCategoryClient.mjs";
+} from "./io/ContentCategoryClient.js";
+import {ServerInfo} from "apollo-server";
+
+
+//https://www.howtographql.com/typescript-apollo/1-getting-started/
+//https://github.com/jsynowiec/node-typescript-boilerplate/blob/main/package.json
 
 await loadConfigs();
 
@@ -25,8 +30,12 @@ startWatchingContentCategoryData();
 //Start file watcher
 startFileWatcher(getProjectList());
 
+//Start server
+const serverInfo: ServerInfo = await server.listen(SERVER_PORT);
+console.log(`Server ready at ${serverInfo.url}`);
+
 //Setup health check and termination handling
-createTerminus(server.httpServer, {
+createTerminus(serverInfo.server, {
     signal: 'SIGINT',
     healthChecks: {
         '/healthcheck': () => {
@@ -40,7 +49,3 @@ createTerminus(server.httpServer, {
     }
 });
 
-//Start server
-server.listen(SERVER_PORT).then(({url}) => {
-    console.log(`Server ready at ${url}`);
-});

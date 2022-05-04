@@ -1,16 +1,15 @@
 import fetch from "cross-fetch";
 import Lodash from "lodash";
 
-let watchTimer;
+let currentData: ContentCategoryData[] = [];
 
-let currentData;
-
-export function getContentCategories() {
+export function getContentCategories(): ContentCategoryData[] {
     return currentData;
 }
 
-export function queryForContentData() {
-    return fetchContentCategories().then(async response => {
+export async function queryForContentData(): Promise<void> {
+    try {
+        const response = await fetchContentCategories();
         if (response.ok) {
             const {data, errors} = await response.json();
 
@@ -28,18 +27,20 @@ export function queryForContentData() {
         } else {
             console.log(`Failed to fetch content categories: ${response.status} ${response.statusText}`);
         }
-    }).catch((err) => {
+    } catch (err) {
         console.log('Unexpected error', err);
-    })
+    }
 }
 
-export function startWatchingContentCategoryData() {
-    return queryForContentData().finally(() => {
-        watchTimer = setTimeout(startWatchingContentCategoryData, 5000);
-    })
+export async function startWatchingContentCategoryData(): Promise<void> {
+    try {
+        return await queryForContentData();
+    } finally {
+        setTimeout(startWatchingContentCategoryData, 5000);
+    }
 }
 
-function fetchContentCategories() {
+function fetchContentCategories(): Promise<Response> {
     return fetch(`${process.env.DATA_SERVER_GRAPHQL}`, {
         method: 'POST',
         headers: {
@@ -52,6 +53,7 @@ function fetchContentCategories() {
                         id
                         name
                         folderPrefix
+                        sortIndex
                         detection {
                             mode
                             alg
@@ -65,4 +67,23 @@ function fetchContentCategories() {
             `
         })
     })
+}
+
+export interface ContentCategoryData { //TODO figure out how to pull from data server
+    id: number
+    name: string
+    folderPrefix: string
+    sortIndex: number
+    detection: DetectionSpec
+}
+
+export interface DetectionSpec {
+    mode: string,
+    alg: string
+    fields: DetectionField[]
+}
+
+export interface DetectionField {
+    id: string,
+    regex: string
 }

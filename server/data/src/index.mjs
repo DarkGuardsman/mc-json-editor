@@ -19,7 +19,7 @@ const categories = [
         name: "Recipe/Crafting/Shaped",
         folderPrefix: "/assets/#{projectId}/recipes",
         spec: {
-            style: "Minecraft:Forge",
+            id: "Minecraft:Forge",
             version: "1.12.2"
         },
         detection: {
@@ -36,7 +36,7 @@ const categories = [
         name: "Recipe/Crafting/ICBM Explosive",
         folderPrefix: "/assets/#{projectId}/recipes",
         spec: {
-            style: "Minecraft:Forge",
+            id: "Minecraft:Forge",
             version: "1.12.2"
         },
         detection: {
@@ -53,7 +53,7 @@ const categories = [
         name: "Recipe/Crafting/Shapeless",
         folderPrefix: "/assets/#{projectId}/recipes",
         spec: {
-            style: "Minecraft:Forge",
+            id: "Minecraft:Forge",
             version: "1.12.2"
         },
         detection: {
@@ -70,7 +70,7 @@ const categories = [
         name: "Model/Item",
         folderPrefix: "/assets/#{projectId}/models/item",
         spec: {
-            style: "Minecraft:Forge",
+            id: "Minecraft:Forge",
             version: "1.12.2"
         },
         detection: {
@@ -83,7 +83,7 @@ const categories = [
         name: "Model/Block",
         folderPrefix: "/assets/#{projectId}/models/block",
         spec: {
-            style: "Minecraft:Forge",
+            id: "Minecraft:Forge",
             version: "1.12.2"
         },
         detection: {
@@ -95,7 +95,7 @@ const categories = [
         name: "Model/States",
         folderPrefix: "/assets/#{projectId}/blockstates",
         spec: {
-            style: "Minecraft:Forge",
+            id: "Minecraft:Forge",
             version: "1.12.2"
         },
         detection: {
