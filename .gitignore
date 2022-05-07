@@ -5,8 +5,6 @@
 
 server/gateway/supergraph.graphql
 
-client/src/generated/
-
 client/graphql.schema.json
 
 server/files/build/
