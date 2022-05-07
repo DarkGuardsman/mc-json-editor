@@ -40,6 +40,7 @@ export type ProjectFileEntry = {
   fileContents?: Maybe<Scalars['JSON']>;
   key: Scalars['String'];
   name: Scalars['String'];
+  project?: Maybe<Project>;
 };
 
 export type ProjectFileSet = {
@@ -184,6 +185,7 @@ export type ProjectFileEntryResolvers<ContextType = any, ParentType extends Reso
   fileContents?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
   key?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  project?: Resolver<Maybe<ResolversTypes['Project']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 

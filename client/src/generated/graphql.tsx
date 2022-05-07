@@ -100,10 +100,12 @@ export type ProjectContentArgs = {
 
 export type ProjectFileEntry = {
   __typename?: 'ProjectFileEntry';
+  _projectId?: Maybe<Scalars['Int']>;
   category: ContentCategory;
   fileContents?: Maybe<Scalars['JSON']>;
   key: Scalars['String'];
   name: Scalars['String'];
+  project?: Maybe<Project>;
 };
 
 export type ProjectFileSet = {
@@ -145,6 +147,14 @@ export type QueryProjectArgs = {
   id: Scalars['Int'];
 };
 
+export type ProjectFileInfoQueryVariables = Exact<{
+  projectId: Scalars['Int'];
+  fileKey: Scalars['String'];
+}>;
+
+
+export type ProjectFileInfoQuery = { __typename?: 'Query', file?: { __typename?: 'ProjectFileEntry', fileContents?: any | null, category: { __typename?: 'ContentCategory', id: number, name: string }, project?: { __typename?: 'Project', name: string } | null } | null };
+
 export type ProjectContentsListQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
@@ -158,7 +168,7 @@ export type ProjectFilesListQueryVariables = Exact<{
 }>;
 
 
-export type ProjectFilesListQuery = { __typename?: 'Query', project?: { __typename?: 'Project', content?: { __typename?: 'ProjectFileSet', entries: Array<{ __typename?: 'ProjectFileEntry', name: string } | null> } | null } | null };
+export type ProjectFilesListQuery = { __typename?: 'Query', project?: { __typename?: 'Project', content?: { __typename?: 'ProjectFileSet', entries: Array<{ __typename?: 'ProjectFileEntry', name: string, key: string } | null> } | null } | null };
 
 export type ProjectsListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -166,6 +176,49 @@ export type ProjectsListQueryVariables = Exact<{ [key: string]: never; }>;
 export type ProjectsListQuery = { __typename?: 'Query', projects?: Array<{ __typename?: 'Project', id: number, name: string } | null> | null };
 
 
+export const ProjectFileInfoDocument = gql`
+    query ProjectFileInfo($projectId: Int!, $fileKey: String!) {
+  file(key: $fileKey, projectId: $projectId) {
+    fileContents
+    category {
+      id
+      name
+    }
+    project {
+      name
+    }
+  }
+}
+    `;
+
+/**
+ * __useProjectFileInfoQuery__
+ *
+ * To run a query within a React component, call `useProjectFileInfoQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProjectFileInfoQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProjectFileInfoQuery({
+ *   variables: {
+ *      projectId: // value for 'projectId'
+ *      fileKey: // value for 'fileKey'
+ *   },
+ * });
+ */
+export function useProjectFileInfoQuery(baseOptions: Apollo.QueryHookOptions<ProjectFileInfoQuery, ProjectFileInfoQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProjectFileInfoQuery, ProjectFileInfoQueryVariables>(ProjectFileInfoDocument, options);
+      }
+export function useProjectFileInfoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProjectFileInfoQuery, ProjectFileInfoQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProjectFileInfoQuery, ProjectFileInfoQueryVariables>(ProjectFileInfoDocument, options);
+        }
+export type ProjectFileInfoQueryHookResult = ReturnType<typeof useProjectFileInfoQuery>;
+export type ProjectFileInfoLazyQueryHookResult = ReturnType<typeof useProjectFileInfoLazyQuery>;
+export type ProjectFileInfoQueryResult = Apollo.QueryResult<ProjectFileInfoQuery, ProjectFileInfoQueryVariables>;
 export const ProjectContentsListDocument = gql`
     query ProjectContentsList($id: Int!) {
   project(id: $id) {
@@ -212,6 +265,7 @@ export const ProjectFilesListDocument = gql`
     content(id: $categoryId) {
       entries {
         name
+        key
       }
     }
   }

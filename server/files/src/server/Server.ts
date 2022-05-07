@@ -62,6 +62,9 @@ const resolvers: Resolvers = {
         fileContents: async (parent) => {
             const {_projectId, key} = parent;
             return loadFileContents(_projectId, key);
+        },
+        project: async (parent) => {
+            return  getProject(parent._projectId);
         }
     },
     Query: {

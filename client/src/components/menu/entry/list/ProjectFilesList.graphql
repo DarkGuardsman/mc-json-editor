@@ -3,6 +3,7 @@ query ProjectFilesList($categoryId: Int!, $projectId: Int!) {
         content(id: $categoryId) {
             entries {
                 name
+                key
             }
         }
     }

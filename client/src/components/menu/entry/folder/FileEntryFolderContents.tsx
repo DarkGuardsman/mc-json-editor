@@ -7,14 +7,16 @@ import {Fragment} from "react";
 import FileEntryFolder from "./FileEntryFolder";
 
 interface FileEntryFolderContentsProps {
-    files?: FileDisplayNest[]
+    files?: FileDisplayNest[],
+    projectId: number
 }
 
 /**
  * Component to display contents of a folder
  * @param {FileDisplayNest[]} files
+ * @param {number} projectId
  */
-export default function FileEntryFolderContents({files}: FileEntryFolderContentsProps) : JSX.Element {
+export default function FileEntryFolderContents({files, projectId}: FileEntryFolderContentsProps) : JSX.Element {
     return (
        <Fragment>
            {
@@ -28,6 +30,7 @@ export default function FileEntryFolderContents({files}: FileEntryFolderContents
                                    folderName={name}
                                    path={path}
                                    files={files}
+                                   projectId={projectId}
                                />
                            )
                        }
@@ -38,7 +41,9 @@ export default function FileEntryFolderContents({files}: FileEntryFolderContents
                            <FileEntry
                                key={`file-${name}`}
                                displayName={name}
+                               projectId={projectId}
                                fileKey={key}
+                               path={path}
                                className={styles.file}
                                icon={isFolder ? <FiFolder className={styles.icon}/> : <FiFile className={styles.icon}/>}
                            />

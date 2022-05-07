@@ -15,7 +15,7 @@ export interface FileDisplayNest {
     /** Full file path */
     key: string,
     /** Path to folder/file */
-    path?: string,
+    path: string,
     /** List of child files/folders */
     files?: FileDisplayNest[]
 }
@@ -103,16 +103,18 @@ function split(filesIn: FileDisplayEntry[], currentPath: string): FileDisplayNes
             return {
                 name: "Malformed Path",
                 key: "undefined",
+                path: "undefined",
                 isFolder: false,
                 file: entry.fileName,
-                errored: true
+                errored: true,
             }
         }
         return {
             name,
             key: entry.key,
             isFolder: false,
-            file: entry.fileName
+            file: entry.fileName,
+            path: `${currentPath}/`
         }
     });
     const folders: FileDisplayNest[] = map(groupEntries(filesIn.filter(entry => !isNil(entry.strings))), (value, key) => {

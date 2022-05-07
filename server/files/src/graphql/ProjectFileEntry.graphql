@@ -4,5 +4,6 @@ type ProjectFileEntry {
     key: String! # Unique reference to the file, usually this is the path to the file
     name: String! # Display Name
     category: ContentCategory! # Content category of the file
+    project: Project # project this file is part of
     fileContents: JSON # JSON file converted to string
 }

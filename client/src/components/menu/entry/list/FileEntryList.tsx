@@ -53,7 +53,7 @@ export default function FileEntryList({categoryId, projectId}: FileEntryListProp
 
     return (
         <div className={styles.container}>
-            <FileEntryFolderContents files={files} />
+            <FileEntryFolderContents files={files} projectId={projectId} />
         </div>
     );
 }

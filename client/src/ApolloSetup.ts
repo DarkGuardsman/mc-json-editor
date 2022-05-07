@@ -1,6 +1,7 @@
 import {ApolloClient, InMemoryCache, makeVar} from "@apollo/client";
+import CurrentFile from "./types/CurrentFile";
 
-export const currentFileVar = makeVar<string | undefined>(undefined);
+export const currentFileVar = makeVar<CurrentFile | undefined>(undefined);
 
 export const apolloClient = new ApolloClient({
     uri: `${process.env.REACT_APP_GRAPHQL}`,

@@ -10,10 +10,11 @@ interface FileEntryFolderProps {
     folderName: string,
     path?: string, //TODO allow right click create file/folder using path
     files?: FileDisplayNest[],
-    className?: string
+    className?: string,
+    projectId: number
 }
 
-export default function FileEntryFolder({folderName, files, className}: FileEntryFolderProps): JSX.Element {
+export default function FileEntryFolder({folderName, files, className, projectId}: FileEntryFolderProps): JSX.Element {
     const [isExpanded, setIsExpanded] = useState(false);
     return (
         <div className={className}>
@@ -27,7 +28,7 @@ export default function FileEntryFolder({folderName, files, className}: FileEntr
                 <h4 className={styles.title}>{folderName}</h4>
             </div>
             <ExpandToggle isExpanded={isExpanded}>
-                <FileEntryFolderContents files={files}/>
+                <FileEntryFolderContents files={files} projectId={projectId}/>
             </ExpandToggle>
         </div>
     )
