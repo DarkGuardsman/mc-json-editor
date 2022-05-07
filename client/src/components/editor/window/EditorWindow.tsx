@@ -1,13 +1,14 @@
 import styles from "./EditorWindow.module.css"
 import {useState} from "react";
 import {currentFileVar} from "../../../ApolloSetup";
+import {useReactiveVar} from "@apollo/client";
 
 const TAB_JSON = "json";
 const TAB_EDITOR = "editor";
 
 export default function EditorWindow(): JSX.Element {
     const [currentTab, setCurrentTab] = useState(TAB_JSON);
-    const currentFile = currentFileVar();
+    const currentFile = useReactiveVar(currentFileVar);
     console.log("current file", currentFile);
     return (
         <div className={styles.div}>

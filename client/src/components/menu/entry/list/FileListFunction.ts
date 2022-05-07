@@ -13,7 +13,7 @@ export interface FileDisplayNest {
     /** True if something failed */
     errored?: boolean,
     /** Full file path */
-    file?: string,
+    key: string,
     /** Path to folder/file */
     path?: string,
     /** List of child files/folders */
@@ -22,6 +22,7 @@ export interface FileDisplayNest {
 
 interface FileDisplayEntry {
     fileName: string,
+    key: string,
     current?: string,
     strings?: string[]
 }
@@ -30,10 +31,10 @@ interface FileDisplayEntry {
 /**
  * Converts list of file paths into nested folders for display
  *
- * @param {{name: String}[]} rawFileList - raw inputs from API
+ * @param {{name: String, key: String}[]} rawFileList - raw inputs from API
  * @return {FileDisplayNest[]} nested data to display as elements
  */
-export default function splitFileEntries(rawFileList: {name: string}[]): FileDisplayNest[] {
+export default function splitFileEntries(rawFileList: {name: string, key: string}[]): FileDisplayNest[] {
     if (isArray(rawFileList) && rawFileList.length > 0) {
         return split(mapInputData(rawFileList), "");
     }
@@ -43,10 +44,10 @@ export default function splitFileEntries(rawFileList: {name: string}[]): FileDis
 /**
  * Maps API inputs for first round of splitting
  *
- * @param {{name: String}[]} rawFileList
+ * @param {{name: String, key: String}[]} rawFileList
  * @return {FileDisplayEntry[]} mapped data
  */
-function mapInputData(rawFileList: {name: string}[]): FileDisplayEntry[] {
+function mapInputData(rawFileList: {name: string, key: string}[]): FileDisplayEntry[] {
     return rawFileList.map(entry => {
         //Fix starting with slash
         const name = entry.name.startsWith("/") ? entry.name.substring(1, entry.name.length) : entry.name;
@@ -59,12 +60,14 @@ function mapInputData(rawFileList: {name: string}[]): FileDisplayEntry[] {
         if (isFolder) {
             return {
                 fileName: name,
+                key: entry.key,
                 current : head(split),
                 strings: split.slice(1, split.length)
             }
         }
         return {
             fileName: name,
+            key: entry.key,
             current: name
         }
     })
@@ -76,12 +79,14 @@ function mapSplitData(files: FileDisplayEntry[]): FileDisplayEntry[] {
             const strings = entry.strings.slice(1, entry.strings.length);
             return {
                 fileName: entry.fileName,
+                key: entry.key,
                 current : head(entry.strings),
                 strings
             }
         }
         return {
             current: head(entry.strings),
+            key: entry.key,
             fileName: entry.fileName
         }
     })
@@ -97,6 +102,7 @@ function split(filesIn: FileDisplayEntry[], currentPath: string): FileDisplayNes
         if(name.trim() === "") {
             return {
                 name: "Malformed Path",
+                key: "undefined",
                 isFolder: false,
                 file: entry.fileName,
                 errored: true
@@ -104,6 +110,7 @@ function split(filesIn: FileDisplayEntry[], currentPath: string): FileDisplayNes
         }
         return {
             name,
+            key: entry.key,
             isFolder: false,
             file: entry.fileName
         }
@@ -111,6 +118,7 @@ function split(filesIn: FileDisplayEntry[], currentPath: string): FileDisplayNes
     const folders: FileDisplayNest[] = map(groupEntries(filesIn.filter(entry => !isNil(entry.strings))), (value, key) => {
         return {
             name: key,
+            key: key,
             isFolder: true,
             files: split(mapSplitData(value), `${currentPath}/${key}`),
             path: `${currentPath}/`

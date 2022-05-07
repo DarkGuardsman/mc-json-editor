@@ -19,7 +19,7 @@ export default function FileEntryFolderContents({files}: FileEntryFolderContents
        <Fragment>
            {
                isNil(files) ? "No Files" :
-                   files.map(({name, path, isFolder, files, file}) => {
+                   files.map(({name, key, path, isFolder, files}) => {
                        if(isFolder) {
                            return (
                                <FileEntryFolder
@@ -31,14 +31,14 @@ export default function FileEntryFolderContents({files}: FileEntryFolderContents
                                />
                            )
                        }
-                       else if(isNil(file)) {
+                       else if(isNil(key)) {
                            return `Invalid File Entry: ${name}`
                        }
                        return (
                            <FileEntry
-                               key={`file-${file}`}
+                               key={`file-${name}`}
                                displayName={name}
-                               fileName={file}
+                               fileKey={key}
                                className={styles.file}
                                icon={isFolder ? <FiFolder className={styles.icon}/> : <FiFile className={styles.icon}/>}
                            />
