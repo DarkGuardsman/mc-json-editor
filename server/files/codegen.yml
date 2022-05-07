@@ -1,5 +1,4 @@
-schema: http://localhost:6001/graphql
-documents: ./src/**/*.graphql
+schema: ./src/**/*.graphql
 generates:
   ./resolvers-types.ts:
     config:
@@ -7,4 +6,3 @@ generates:
     plugins:
       - typescript
       - typescript-resolvers
-      - typescript-operations
