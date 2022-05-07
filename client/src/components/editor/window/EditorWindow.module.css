@@ -1,0 +1,7 @@
+.div {
+    border-style: groove;
+    border-color: #282c34;
+    border-width: thin;
+    margin-bottom: 5px;
+    float: left;
+}
