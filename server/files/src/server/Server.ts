@@ -6,8 +6,9 @@ import {GraphQLJSON} from "graphql-type-json";
 import {ApolloServer} from "apollo-server";
 import {buildSubgraphSchema} from "@apollo/subgraph";
 import {getProjectList} from "../config/AppConfig.js";
-import {getFiles, getFileSets} from "../io/FileWatcherLogic.js";
+import {getFile, getFiles, getFileSets, loadFileContents} from "../io/FileWatcherLogic.js";
 import {Resolvers} from "../../resolvers-types";
+import WatchedFile from "../types/WatchedFile";
 
 function getProjects() {
     return getProjectList().map(project => ({id: project.id, name: project.name}));
@@ -26,7 +27,8 @@ const resolvers: Resolvers = {
                 .map(entry => {
                     return {
                         ...entry,
-                        parentId: parent.id
+                        parentId: parent.id,
+                        entries: undefined
                     }
                 });
         },
@@ -34,7 +36,8 @@ const resolvers: Resolvers = {
             const category = Lodash.head(getFileSets(parent.id).filter(fileSet => fileSet.category.id === id));
             return {
                 ...category,
-                parentId: parent.id
+                parentId: parent.id,
+                entries: undefined
             }
         },
     },
@@ -45,12 +48,36 @@ const resolvers: Resolvers = {
             if(!Lodash.isArray(files)) {
                 return [];
             }
-            return files.map(entry => ({name: entry.path})); //TODO include more metadata about the file
+            return files.map(entry => ({
+                //TODO include more metadata about the file
+                name: entry.path,
+                key: entry.fullPath,
+                category: {
+                    id: parent.category.id
+                }
+            }));
+        }
+    },
+    ProjectFileEntry: {
+        fileContents: async (parent) => {
+            const {_projectId, key} = parent;
+            return loadFileContents(_projectId, key);
         }
     },
     Query: {
         projects: async () => getProjects(),
-        project: async (_, {id}) => getProject(id)
+        project: async (_, {id}) => getProject(id),
+        file: async (_, {projectId, key}) => {
+            const file: WatchedFile = getFile(projectId ,key);
+            return {
+                _projectId: projectId,
+                key: file.fullPath,
+                name: file.path,
+                category: {
+                    id: file.categoryId
+                }
+            }
+        }
     }
 };
 

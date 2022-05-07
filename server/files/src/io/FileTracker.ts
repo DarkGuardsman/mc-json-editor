@@ -6,7 +6,7 @@ import WatchedFile from "../types/WatchedFile";
 
 export default class FileTracker {
 
-    private readonly fileMap: Map<String, WatchedFile> = new Map<String, WatchedFile>();
+    private readonly fileMap: Map<string, WatchedFile> = new Map<string, WatchedFile>();
     private project: ProjectConfig;
     private categories: number[] = [];
 
@@ -34,7 +34,7 @@ export default class FileTracker {
     /**
      * Notifies the tracker that a file has changed. This will cause the tracker to rescan the file.
      */
-    onFileChanged(key: String) {
+    onFileChanged(key: string) {
         const entry = this.fileMap.get(key);
 
         if(Lodash.isNil(entry)) {
@@ -109,6 +109,19 @@ export default class FileTracker {
             }
         })
         return results;
+    }
+
+    getFile(fileKey: string) {
+        return this.fileMap.get(fileKey);
+    }
+
+    loadFileContents(fileKey: string) {
+        const file: WatchedFile = this.fileMap.get(fileKey);
+        if(file !== undefined && file !== null) {
+            const rawFile = fileSystem.readFileSync(file.fullPath, 'utf8');
+            return JSON.parse(rawFile);
+        }
+        return undefined;
     }
 
     /**

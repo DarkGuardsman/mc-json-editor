@@ -1,7 +1,6 @@
 import chokidar, {FSWatcher} from "chokidar";
 import FileTracker from "./FileTracker.js";
 import Lodash from "lodash";
-import {ProjectFileSet} from "../../resolvers-types";
 import WatchedFile from "../types/WatchedFile";
 import ProjectConfig from "../types/ProjectConfig";
 
@@ -9,10 +8,10 @@ import ProjectConfig from "../types/ProjectConfig";
 const watchers: FSWatcher[] = [];
 
 //All open file trackers
-const fileTrackers = new Map();
+const fileTrackers: Map<number, FileTracker> = new Map();
 
 
-export function getFiles(projectId, categoryId): WatchedFile[] {
+export function getFiles(projectId: number, categoryId: number): WatchedFile[] {
     const fileTracker = fileTrackers.get(projectId);
     if(Lodash.isNil(fileTracker)) {
         throw new Error(`Unknown project with id ${projectId}`);
@@ -20,7 +19,23 @@ export function getFiles(projectId, categoryId): WatchedFile[] {
     return fileTracker.getFiles(categoryId);
 }
 
-export function getFileSets(projectId): ProjectFileSet[] {
+export function getFile(projectId: number, fileKey: string): WatchedFile {
+    const fileTracker = fileTrackers.get(projectId);
+    if(Lodash.isNil(fileTracker)) {
+        throw new Error(`Unknown project with id ${projectId}`);
+    }
+    return fileTracker.getFile(fileKey);
+}
+
+export function loadFileContents(projectId: number, fileKey: string) {
+    const fileTracker = fileTrackers.get(projectId);
+    if(Lodash.isNil(fileTracker)) {
+        throw new Error(`Unknown project with id ${projectId}`);
+    }
+    return fileTracker.loadFileContents(fileKey);
+}
+
+export function getFileSets(projectId: number): { category: { id: number } }[] {
     const fileTracker = fileTrackers.get(projectId);
     if(Lodash.isNil(fileTracker)) {
         throw new Error(`Unknown project with id ${projectId}`);

@@ -21,7 +21,7 @@ export async function loadConfigs() {
             metadata: {
                 projectId: "icbmclassic"
             },
-            path: "F:/github/1.12/ICBM-Classic" //User defined
+            path: "/home/rseife/Documents/git/minecraft/1.12/ICBM-Classic" //User defined
         }
     ]
 }

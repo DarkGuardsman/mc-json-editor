@@ -1,4 +1,4 @@
-import FileTracker from "./FileTracker.ts";
+import FileTracker from "./FileTracker";
 
 describe('addFiles', () => {
     test("single add", () => {
@@ -7,5 +7,7 @@ describe('addFiles', () => {
             name: "File Tracker Test",
             path: "/some/random/path/"
         });
+
+        expect(fileTracker).toBeDefined();
     })
 });

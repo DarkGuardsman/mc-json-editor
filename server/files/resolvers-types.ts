@@ -35,7 +35,10 @@ export type ProjectContentArgs = {
 
 export type ProjectFileEntry = {
   __typename?: 'ProjectFileEntry';
+  _projectId?: Maybe<Scalars['Int']>;
+  category: ContentCategory;
   fileContents?: Maybe<Scalars['JSON']>;
+  key: Scalars['String'];
   name: Scalars['String'];
 };
 
@@ -55,7 +58,7 @@ export type Query = {
 
 
 export type QueryFileArgs = {
-  path: Scalars['String'];
+  key: Scalars['String'];
   projectId: Scalars['Int'];
 };
 
@@ -176,7 +179,10 @@ export type ProjectResolvers<ContextType = any, ParentType extends ResolversPare
 }>;
 
 export type ProjectFileEntryResolvers<ContextType = any, ParentType extends ResolversParentTypes['ProjectFileEntry'] = ResolversParentTypes['ProjectFileEntry']> = ResolversObject<{
+  _projectId?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  category?: Resolver<ResolversTypes['ContentCategory'], ParentType, ContextType>;
   fileContents?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
+  key?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
@@ -189,7 +195,7 @@ export type ProjectFileSetResolvers<ContextType = any, ParentType extends Resolv
 }>;
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
-  file?: Resolver<Maybe<ResolversTypes['ProjectFileEntry']>, ParentType, ContextType, RequireFields<QueryFileArgs, 'path' | 'projectId'>>;
+  file?: Resolver<Maybe<ResolversTypes['ProjectFileEntry']>, ParentType, ContextType, RequireFields<QueryFileArgs, 'key' | 'projectId'>>;
   project?: Resolver<Maybe<ResolversTypes['Project']>, ParentType, ContextType, RequireFields<QueryProjectArgs, 'id'>>;
   projects?: Resolver<Maybe<Array<Maybe<ResolversTypes['Project']>>>, ParentType, ContextType>;
 }>;

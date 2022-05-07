@@ -1,5 +1,8 @@
 # Single file entry
 type ProjectFileEntry {
-    name: String!
-    fileContents: JSON #JSON file converted to string
+    _projectId: Int #internal key for project parent reference
+    key: String! # Unique reference to the file, usually this is the path to the file
+    name: String! # Display Name
+    category: ContentCategory! # Content category of the file
+    fileContents: JSON # JSON file converted to string
 }
