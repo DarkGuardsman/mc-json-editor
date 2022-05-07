@@ -30,10 +30,10 @@ interface FileDisplayEntry {
 /**
  * Converts list of file paths into nested folders for display
  *
- * @param {ProjectFileEntry[]} rawFileList - raw inputs from API
+ * @param {{name: String}[]} rawFileList - raw inputs from API
  * @return {FileDisplayNest[]} nested data to display as elements
  */
-export default function splitFileEntries(rawFileList: ProjectFileEntry[]): FileDisplayNest[] {
+export default function splitFileEntries(rawFileList: {name: string}[]): FileDisplayNest[] {
     if (isArray(rawFileList) && rawFileList.length > 0) {
         return split(mapInputData(rawFileList), "");
     }
@@ -43,10 +43,10 @@ export default function splitFileEntries(rawFileList: ProjectFileEntry[]): FileD
 /**
  * Maps API inputs for first round of splitting
  *
- * @param {ProjectFileEntry[]} rawFileList
+ * @param {{name: String}[]} rawFileList
  * @return {FileDisplayEntry[]} mapped data
  */
-function mapInputData(rawFileList: ProjectFileEntry[]): FileDisplayEntry[] {
+function mapInputData(rawFileList: {name: string}[]): FileDisplayEntry[] {
     return rawFileList.map(entry => {
         //Fix starting with slash
         const name = entry.name.startsWith("/") ? entry.name.substring(1, entry.name.length) : entry.name;

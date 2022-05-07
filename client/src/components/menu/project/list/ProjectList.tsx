@@ -1,6 +1,7 @@
 import {isArray, isNil} from "lodash";
 import ProjectEntry from "../item/ProjectEntry";
 import {useProjectsListQuery} from "../../../../generated/graphql";
+import styles from "./ProjectList.module.css"
 
 /**
  * Generates a list of projects for the menu
@@ -18,14 +19,14 @@ export default function ProjectList(): JSX.Element {
 
     if (!isArray(projects) || projects.length === 0) {
         return (
-            <div className="projects-menu warn">
+            <div className={styles.div}>
                 <p>No Projects</p>
             </div>
         );
     }
 
     return (
-        <div className="projects-menu warn">
+        <div className={styles.div}>
             {
                 projects
                     .map(project => {
