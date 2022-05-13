@@ -4,7 +4,7 @@ import {currentFileVar} from "../../../ApolloSetup";
 import {useReactiveVar} from "@apollo/client";
 import {ProjectFileEntry, useProjectFileInfoQuery} from "../../../generated/graphql";
 import {isNil} from "lodash";
-import ViewTab from "../viewer/ViewTab";
+import JsonFileViewer from "../viewer/JsonFileViewer";
 
 const TAB_JSON = "json";
 const TAB_EDITOR = "editor";
@@ -101,7 +101,7 @@ function DisplayTab({currentTab, json}: DisplayTabProps) : JSX.Element | null {
     if(currentTab === TAB_JSON) {
         return (
             <div className={styles.tab}>
-                <ViewTab json={json}/>
+                <JsonFileViewer json={json}/>
             </div>
         )
     }
