@@ -11,7 +11,7 @@ interface ItemSlotProps {
  */
 export default function ItemSlot({itemID}: ItemSlotProps): JSX.Element {
     return (
-        <div className={styles.div}>
+        <div className={styles.slot}>
             <ItemDisplay itemID={itemID}/>
         </div>
     );

@@ -1,3 +1,9 @@
-.div {
-
+.slot {
+    background: #8B8B8B;
+    border: 3px solid;
+    border-color: #373737 #FFF #FFF #373737;
+    max-width: 70px;
+    max-height: 70px;
+    min-width: 70px;
+    min-height: 70px;
 }

@@ -1,5 +1,5 @@
-import styles from './ItemSlot.module.css'
-import ItemGridRow from "./ItemGridRow";
+import styles from './ItemGrid.module.css'
+import ItemGridRow from "../row/ItemRow";
 
 interface ItemGridProps {
     items: string[][]

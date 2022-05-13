@@ -9,5 +9,27 @@
         }
       }
     }
+  },
+  "minecraft:oak_planks": {
+    "data": {
+      "item": {
+        "name": "Oak Planks",
+        "image": {
+          "url": "http://localhost:4003/minecraft/minecraft_oak_planks.png",
+          "altText": "Minecraft Oak Plank Block"
+        }
+      }
+    }
+  },
+  "minecraft:oak_sapling": {
+    "data": {
+      "item": {
+        "name": "Oak Sapling",
+        "image": {
+          "url": "http://localhost:4003/minecraft/minecraft_oak_sapling.png",
+          "altText": "Minecraft Oak Sapling Item"
+        }
+      }
+    }
   }
 }

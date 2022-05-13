@@ -1,12 +1,13 @@
 import ItemSlot from "../slot/ItemSlot";
+import styles from './ItemRow.module.css';
 
 interface ItemGridRowProps {
     items: string[]
 }
 
-export default function ItemGridRow({items}: ItemGridRowProps): JSX.Element {
+export default function ItemRow({items}: ItemGridRowProps): JSX.Element {
     return (
-        <div>
+        <div className={styles.row}>
             {
                 items.map(item => <ItemSlot itemID={item} />)
             }
