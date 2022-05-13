@@ -1,5 +1,5 @@
 import {useItemDisplayInfoQuery} from "../../../../../generated/graphql";
-import {FcCancel, FcPackage, FcSynchronize} from "react-icons/fc";
+import {FcHighPriority, FcPackage, FcSynchronize} from "react-icons/fc";
 import styles from './ItemDisplay.module.css'
 
 interface ItemDisplayProps {
@@ -30,7 +30,7 @@ export default function ItemDisplay({itemID}: ItemDisplayProps): JSX.Element {
         || data?.data?.item === null || data?.data?.item === undefined) {
         return (
             <div className={styles.div}>
-                <FcCancel className={styles.icon}/>
+                <FcHighPriority className={styles.icon}/>
             </div>
         )
     } else if (data?.data?.item?.image === null || data?.data?.item?.image === undefined
