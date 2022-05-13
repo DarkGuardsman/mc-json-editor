@@ -1,18 +1,20 @@
 .img {
-    margin: auto;
+    margin: 3px;
+    height: 64px;
+    width: 64px;
 }
 
 .icon {
-    margin: 5px;
-    height: 40px;
-    width: 40px;
+    margin: 3px;
+    height: 64px;
+    width: 64px;
 }
 
 .div {
-    max-width: 50px;
-    min-width: 50px;
-    max-height: 50px;
-    min-height: 50px;
+    max-width: 70px;
+    min-width: 70px;
+    max-height: 70px;
+    min-height: 70px;
     border-style: dashed;
     border-width: 2px;
     border-color: black;
