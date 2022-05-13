@@ -3,4 +3,5 @@ type Query {
     packageSet(id: Int!): ContentPackageSet # single package set
     contentCategories: [ContentCategory] # all categories
     contentCategory(id: Int!): ContentCategory # single category
+    data: DataQuery # grouping of queries related to content dictionaries
 }

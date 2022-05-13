@@ -1,0 +1,16 @@
+{
+  "name": "json-image-server",
+  "version": "1.0.0",
+  "description": "Image server for providing icons",
+  "main": "index.js",
+  "scripts": {
+    "start:local": "env-cmd -f local.env node ./index.js"
+  },
+  "keywords": [],
+  "author": "Robin Seifert",
+  "license": "MIT",
+  "dependencies": {
+    "env-cmd": "^10.1.0",
+    "express": "^4.18.1"
+  }
+}

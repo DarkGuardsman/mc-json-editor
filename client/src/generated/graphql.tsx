@@ -56,6 +56,20 @@ export type ContentGroup = {
   entries?: Maybe<Array<Maybe<ContentEntry>>>;
 };
 
+export type ContentImage = {
+  __typename?: 'ContentImage';
+  altText?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']>;
+};
+
+export type ContentItemEntry = {
+  __typename?: 'ContentItemEntry';
+  id: Scalars['Int'];
+  image?: Maybe<ContentImage>;
+  key: Scalars['String'];
+  name: Scalars['String'];
+};
+
 export type ContentPackage = {
   __typename?: 'ContentPackage';
   contents?: Maybe<Array<Maybe<ContentGroup>>>;
@@ -70,6 +84,17 @@ export type ContentPackageSet = {
   id: Scalars['Int'];
   name: Scalars['String'];
   packages?: Maybe<Array<Maybe<ContentPackage>>>;
+};
+
+export type DataQuery = {
+  __typename?: 'DataQuery';
+  item?: Maybe<ContentItemEntry>;
+};
+
+
+export type DataQueryItemArgs = {
+  id?: InputMaybe<Scalars['Int']>;
+  key?: InputMaybe<Scalars['String']>;
 };
 
 export type Detection = {
@@ -119,6 +144,7 @@ export type Query = {
   __typename?: 'Query';
   contentCategories?: Maybe<Array<Maybe<ContentCategory>>>;
   contentCategory?: Maybe<ContentCategory>;
+  data?: Maybe<DataQuery>;
   file?: Maybe<ProjectFileEntry>;
   packageSet?: Maybe<ContentPackageSet>;
   packageSets?: Maybe<Array<Maybe<ContentPackageSet>>>;
@@ -146,6 +172,13 @@ export type QueryPackageSetArgs = {
 export type QueryProjectArgs = {
   id: Scalars['Int'];
 };
+
+export type ItemDisplayInfoQueryVariables = Exact<{
+  itemID: Scalars['String'];
+}>;
+
+
+export type ItemDisplayInfoQuery = { __typename?: 'Query', data?: { __typename?: 'DataQuery', item?: { __typename?: 'ContentItemEntry', name: string, image?: { __typename?: 'ContentImage', altText?: string | null, url?: string | null } | null } | null } | null };
 
 export type ProjectFileInfoQueryVariables = Exact<{
   projectId: Scalars['Int'];
@@ -176,6 +209,47 @@ export type ProjectsListQueryVariables = Exact<{ [key: string]: never; }>;
 export type ProjectsListQuery = { __typename?: 'Query', projects?: Array<{ __typename?: 'Project', id: number, name: string } | null> | null };
 
 
+export const ItemDisplayInfoDocument = gql`
+    query ItemDisplayInfo($itemID: String!) {
+  data {
+    item(key: $itemID) {
+      name
+      image {
+        altText
+        url
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useItemDisplayInfoQuery__
+ *
+ * To run a query within a React component, call `useItemDisplayInfoQuery` and pass it any options that fit your needs.
+ * When your component renders, `useItemDisplayInfoQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useItemDisplayInfoQuery({
+ *   variables: {
+ *      itemID: // value for 'itemID'
+ *   },
+ * });
+ */
+export function useItemDisplayInfoQuery(baseOptions: Apollo.QueryHookOptions<ItemDisplayInfoQuery, ItemDisplayInfoQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ItemDisplayInfoQuery, ItemDisplayInfoQueryVariables>(ItemDisplayInfoDocument, options);
+      }
+export function useItemDisplayInfoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ItemDisplayInfoQuery, ItemDisplayInfoQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ItemDisplayInfoQuery, ItemDisplayInfoQueryVariables>(ItemDisplayInfoDocument, options);
+        }
+export type ItemDisplayInfoQueryHookResult = ReturnType<typeof useItemDisplayInfoQuery>;
+export type ItemDisplayInfoLazyQueryHookResult = ReturnType<typeof useItemDisplayInfoLazyQuery>;
+export type ItemDisplayInfoQueryResult = Apollo.QueryResult<ItemDisplayInfoQuery, ItemDisplayInfoQueryVariables>;
 export const ProjectFileInfoDocument = gql`
     query ProjectFileInfo($projectId: Int!, $fileKey: String!) {
   file(key: $fileKey, projectId: $projectId) {

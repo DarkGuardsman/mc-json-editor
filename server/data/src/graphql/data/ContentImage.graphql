@@ -1,0 +1,5 @@
+type ContentImage {
+    altText: String! # Alternative text to use for the image
+    url: String! # Unmodified URL to the image
+    # TODO cache icons at different sizes
+}

@@ -3,6 +3,7 @@ import {initialize, mswDecorator} from 'msw-storybook-addon';
 import projectListJson from "./mocks/ProjectsList.json";
 import projectFilesListJson from "./mocks/ProjectFilesList.json"
 import contentCategoryJson from "./mocks/ProjectContentsList.json"
+import itemDisplayInfoJson from "./mocks/ItemDisplayInfo.json"
 import '../src/App.css'
 
 // Initialize MSW https://storybook.js.org/addons/msw-storybook-addon
@@ -22,6 +23,10 @@ export const parameters = {
             }),
             graphql.query("ProjectFilesList", (reg, res, ctx) => {
                 return res(ctx.data(projectFilesListJson))
+            }),
+            graphql.query("ItemDisplayInfo", (reg, res, ctx) => {
+                const {itemID} = reg.variables;
+                return res(ctx.data(itemDisplayInfoJson[itemID]))
             })
         ]
     }

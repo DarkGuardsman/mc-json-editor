@@ -1,0 +1,7 @@
+# Any content entry that can be considered a single element/block/item/character/etc
+type ContentItemEntry {
+    id: Int! # unique database reference ID
+    key: String! # unique lookup key
+    name: String! # display name
+    image: ContentImage # Icon image for display
+}

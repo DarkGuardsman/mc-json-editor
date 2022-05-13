@@ -1,0 +1,3 @@
+type DataQuery {
+    item(key: String, id: Int): ContentItemEntry # Lookup for a single item by id
+}

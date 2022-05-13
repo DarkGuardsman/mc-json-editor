@@ -1,0 +1,19 @@
+.img {
+    margin: auto;
+}
+
+.icon {
+    margin: 5px;
+    height: 40px;
+    width: 40px;
+}
+
+.div {
+    max-width: 50px;
+    min-width: 50px;
+    max-height: 50px;
+    min-height: 50px;
+    border-style: dashed;
+    border-width: 2px;
+    border-color: black;
+}
