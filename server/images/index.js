@@ -6,6 +6,6 @@ app.get('/', (req, res) => {
     res.send('Hi, this is an image server with no functionality outside static files');
 });
 
-app.use('/static', express.static('/static/'));
+app.use(express.static('static'));
 
 app.listen(SERVER_PORT);

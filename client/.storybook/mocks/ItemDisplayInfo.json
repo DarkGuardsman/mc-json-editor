@@ -4,8 +4,7 @@
       "item": {
         "name": "Oak Log",
         "image": {
-          "url": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e9/Oak_Log_%28UD%29_JE5_BE3.png/revision/latest/scale-to-width-down/300?cb=20200317191604",
-          "source": "https://minecraft.fandom.com/wiki/Log",
+          "url": "http://localhost:4003/minecraft/minecraft_oak_log.png",
           "altText": "Minecraft Oak Log Block"
         }
       }
