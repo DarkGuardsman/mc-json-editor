@@ -43,7 +43,7 @@ const PROCESSING_SCHEMA : ProcessingSchema = {
                                         "item",
                                         "data"
                                     ],
-                                    format: "{1}@{2}"
+                                    format: "{0}@{1}"
                                 }
                             ]
                         }
@@ -65,7 +65,7 @@ const PROCESSING_SCHEMA : ProcessingSchema = {
                             "item",
                             "data"
                         ],
-                        format: "{1}@{2}"
+                        format: "{0}@{1}"
                     }
                 ]
             },

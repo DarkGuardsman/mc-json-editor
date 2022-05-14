@@ -10,6 +10,17 @@
       }
     }
   },
+  "minecraft:oak_log@0": {
+    "data": {
+      "item": {
+        "name": "Oak Log",
+        "image": {
+          "url": "http://localhost:4003/minecraft/minecraft_oak_log.png",
+          "altText": "Minecraft Oak Log Block"
+        }
+      }
+    }
+  },
   "minecraft:oak_planks": {
     "data": {
       "item": {
@@ -17,6 +28,28 @@
         "image": {
           "url": "http://localhost:4003/minecraft/minecraft_oak_planks.png",
           "altText": "Minecraft Oak Plank Block"
+        }
+      }
+    }
+  },
+  "minecraft:oak_planks@0": {
+    "data": {
+      "item": {
+        "name": "Oak Planks",
+        "image": {
+          "url": "http://localhost:4003/minecraft/minecraft_oak_planks.png",
+          "altText": "Minecraft Oak Plank Block"
+        }
+      }
+    }
+  },
+  "minecraft:chest@0": {
+    "data": {
+      "item": {
+        "name": "Chest",
+        "image": {
+          "url": "http://localhost:4003/minecraft/minecraft_chest.png",
+          "altText": "Minecraft Chest"
         }
       }
     }
