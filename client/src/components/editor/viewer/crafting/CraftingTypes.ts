@@ -29,6 +29,7 @@ export type ProcessingSchemaSteps = ProcessingSchemaStep | ProcessingLookupJson 
 
 export interface ProcessingSchemaStep {
     action: string,
+    run?: string,
     processing?: ProcessingSchemaSteps[]
 }
 

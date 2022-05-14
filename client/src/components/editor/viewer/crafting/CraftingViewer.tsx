@@ -32,12 +32,19 @@ const PROCESSING_SCHEMA : ProcessingSchema = {
                             action: "map", //Input: ["C", "X", "C"]
                             processing: [
                                 {
+                                    action: "replace",
+                                    match: " ",
+                                    insert: null
+                                },
+                                {
+                                    run: "definedOnly",
                                     action: "lookup:json", //"C" -> { item: "minecraft:chest", data: 0 }
                                     field: "key",
                                     arg: "entry" //"C"
                                 },
                                 //TODO add switch statement to handle different types (single, multi, tag, ore dictionary, custom)
                                 {
+                                    run: "definedOnly",
                                     action: "format", // { item: "minecraft:chest", data: 0 } -> "minecraft:chest@0"
                                     data: [
                                         "item",

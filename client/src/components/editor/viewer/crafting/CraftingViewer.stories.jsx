@@ -43,3 +43,26 @@ TwoByTwo.args = {
         }
     }
 };
+
+export const ThreeByThree = MockTemplate.bind({});
+ThreeByThree.args = {
+    json: {
+        "result": {
+            "item": "minecraft:chest",
+            "data": 0,
+            "count": 1
+        },
+        "pattern": [
+            "PPP",
+            "P P",
+            "PPP"
+        ],
+        "type": "minecraft:crafting_shaped",
+        "key": {
+            "P": {
+                "item": "minecraft:oak_planks",
+                "data": 0
+            }
+        }
+    }
+};
