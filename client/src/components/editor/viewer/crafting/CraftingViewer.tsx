@@ -1,7 +1,7 @@
 import ItemGrid from "../../elements/item/grid/ItemGrid";
 import ItemSlot from "../../elements/item/slot/ItemSlot";
 import styles from "./CraftingViewer.module.css"
-import {FiArrowRight} from "react-icons/all";
+import {FiArrowRight} from "react-icons/fi";
 import {get} from 'lodash';
 import {ComponentSchema, ItemGridSchema, ItemResultSchema, ProcessingSchema} from "./CraftingTypes";
 import {handleProcessing} from "./JsonProcessingFunction";
@@ -29,7 +29,7 @@ const PROCESSING_SCHEMA : ProcessingSchema = {
                     action: "map", //Input: [["C", "X", "C"]]
                     processing: [
                         {
-                            action: "map", //Input: ["C", "X", "C"]
+                            action: "map", //Input: ["C", "X", "C"]$S
                             processing: [
                                 {
                                     action: "replace",
@@ -42,15 +42,39 @@ const PROCESSING_SCHEMA : ProcessingSchema = {
                                     field: "key",
                                     arg: "entry" //"C"
                                 },
-                                //TODO add switch statement to handle different types (single, multi, tag, ore dictionary, custom)
                                 {
-                                    run: "definedOnly",
-                                    action: "format", // { item: "minecraft:chest", data: 0 } -> "minecraft:chest@0"
-                                    data: [
-                                        "item",
-                                        "data"
-                                    ],
-                                    format: "{0}@{1}"
+                                    action: "switch",
+                                    paths: [
+                                        {
+                                            condition: "contains",
+                                            field: "data",
+                                            processing: [{
+                                                run: "definedOnly",
+                                                action: "format", // { item: "minecraft:chest", data: 0 } -> "minecraft:chest@0"
+                                                data: [
+                                                    "item",
+                                                    "data"
+                                                ],
+                                                format: "{0}@{1}"
+                                            }]
+                                        },
+                                        //TODO add tag support
+                                        //TODO add list support
+                                        //TODO add ore-dict support
+                                        //TODO add custom entry support
+                                        {
+                                            condition: "default",
+                                            field: "item",
+                                            processing: [{
+                                                run: "definedOnly",
+                                                action: "format",
+                                                data: [
+                                                    "item"
+                                                ],
+                                                format: "{0}"
+                                            }]
+                                        }
+                                    ]
                                 }
                             ]
                         }
@@ -119,6 +143,7 @@ export default function CraftingViewer({json}: CraftingViewerProps): JSX.Element
 function BuildGrid(processing: ItemGridSchema, json: object) {
     const data = get(json, processing.field);
     const items = handleProcessing(data, processing.processing, json) as unknown as ItemKey[][];
+    console.log("buildGrid", items);
     return <ItemGrid items={items}/>;
 }
 
