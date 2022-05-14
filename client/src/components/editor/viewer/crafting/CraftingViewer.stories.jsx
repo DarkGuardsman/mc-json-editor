@@ -7,18 +7,19 @@ export default {
     component: CraftingViewer
 }
 
-const MockTemplate = ({json}) => {
+const MockTemplate = (args) => {
     const testApollo = createNewTestClient();
     return (
-        <ApolloProvider client={testApollo.client} >
-            <CraftingViewer json={json}/>
+        <ApolloProvider client={testApollo.client}>
+            <CraftingViewer {...args}/>
         </ApolloProvider>
     )
 }
 
-export const NoJson = MockTemplate.bind({json: null});
+export const NoJson = MockTemplate.bind({});
 
-export const TwoByTwo = MockTemplate.bind({
+export const TwoByTwo = MockTemplate.bind({});
+TwoByTwo.args = {
     json: {
         "result": {
             "item": "minecraft:chest",
@@ -41,4 +42,4 @@ export const TwoByTwo = MockTemplate.bind({
             }
         }
     }
-});
+};

@@ -2,7 +2,10 @@ import ItemGrid from "../../elements/item/grid/ItemGrid";
 import ItemSlot from "../../elements/item/slot/ItemSlot";
 import styles from "./CraftingViewer.module.css"
 import {FiArrowRight} from "react-icons/all";
+import {get} from 'lodash';
 import {ComponentSchema, ItemGridSchema, ItemResultSchema, ProcessingSchema} from "./CraftingTypes";
+import {handleProcessing} from "./JsonProcessingFunction";
+import {ItemKey} from "../../../../type/ItemKey";
 
 interface CraftingViewerProps {
     json: object
@@ -15,7 +18,7 @@ const PROCESSING_SCHEMA : ProcessingSchema = {
             field: "pattern",
             processing: [
                 {
-                    action: "map", // "CXC" -> ["C", "X", "C"]
+                    action: "map", // ["CXC"] -> [["C", "X", "C"]]
                     processing: [
                         {
                             action: "characters"
@@ -23,10 +26,10 @@ const PROCESSING_SCHEMA : ProcessingSchema = {
                     ]
                 },
                 {
-                    action: "map", //Input: ["C", "X", "C"]
+                    action: "map", //Input: [["C", "X", "C"]]
                     processing: [
                         {
-                            action: "map", //Input: "C"
+                            action: "map", //Input: ["C", "X", "C"]
                             processing: [
                                 {
                                     action: "lookup:json", //"C" -> { item: "minecraft:chest", data: 0 }
@@ -84,8 +87,6 @@ export default function CraftingViewer({json}: CraftingViewerProps): JSX.Element
 
     const processingSchema = PROCESSING_SCHEMA; //TODO pull schema from server based on JSON category
 
-
-
     return (
         <div className={styles.container}>
 
@@ -109,7 +110,8 @@ export default function CraftingViewer({json}: CraftingViewerProps): JSX.Element
 }
 
 function BuildGrid(processing: ItemGridSchema, json: object) {
-
+    const data = get(json, processing.field);
+    const items = handleProcessing(data, processing.processing, json) as unknown as ItemKey[][];
     return <ItemGrid items={items}/>;
 }
 
@@ -122,9 +124,10 @@ function BuildArrow(processing: ComponentSchema, json: object) {
 }
 
 function BuildResult(processing: ItemResultSchema, json: object) {
+    const item = handleProcessing(get(json, processing.item.field), processing.item.processing, json) as unknown as ItemKey;
     return (
         <div className={styles.result}>
-            <ItemSlot itemID={result}/>
+            <ItemSlot itemID={item}/>
         </div>
     )
 }
