@@ -1,5 +1,11 @@
-import {ProcessingLookupJson, ProcessingReplace, ProcessingSchemaSteps, ProcessingStringFormat} from "./CraftingTypes";
-import {get} from "lodash";
+import {
+    ProcessingLookupJson,
+    ProcessingReplace,
+    ProcessingSchemaSteps,
+    ProcessingStringFormat,
+    ProcessingSwitch, ProcessingSwitchCondition, ProcessingSwitchConditionField
+} from "./CraftingTypes";
+import {get, head} from "lodash";
 
 type StepInput = null | undefined | ProcessingSchemaSteps[]
 
@@ -20,13 +26,36 @@ export function handleProcessing(fieldData: any, processingSteps: StepInput, jso
                         currentData = replaceValue(step as ProcessingReplace, currentData)
                     } else if (step.action === "format") {
                         currentData = formatIntoString(step as ProcessingStringFormat, currentData);
-                    } else {
+                    } else if(step.action === "switch") {
+                        currentData = switchLogic(step as ProcessingSwitch, currentData, json, depth);
+                    }
+                    else {
                         throw new Error(`[${depth}] Unknown processing step ${step.action}`);
                     }
                 }
             });
     }
     return currentData;
+}
+
+function switchLogic(step: ProcessingSwitch, currentData: any, json: object, depth: number) {
+
+    const pathToRun: ProcessingSwitchCondition | undefined = head(step.paths.filter(path => {
+        if(path.condition === "contains") {
+            const fieldBasedPath = path as ProcessingSwitchConditionField;
+            const value = get(currentData, fieldBasedPath.field);
+            return value !== null && value !== undefined;
+        }
+        else if(path.condition === "default") {
+           return true;
+        }
+        throw new Error(`[${depth}] Unknown processing switch condition ${path.condition}`);
+    }));
+
+    if(pathToRun !== null && pathToRun !== undefined) {
+        return handleProcessing(currentData, pathToRun.processing, json, depth);
+    }
+    throw new Error(`[${depth}] Failed to match a condition for switch, add a default`);
 }
 
 function shouldRunStep(step: ProcessingSchemaSteps, currentData: any, depth: number) {

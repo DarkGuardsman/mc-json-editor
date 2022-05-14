@@ -25,7 +25,7 @@ export interface ItemResultSchema extends ComponentSchema {
     }
 }
 
-export type ProcessingSchemaSteps = ProcessingSchemaStep | ProcessingLookupJson | ProcessingStringFormat | ProcessingReplace
+export type ProcessingSchemaSteps = ProcessingSchemaStep | ProcessingLookupJson | ProcessingStringFormat | ProcessingReplace | ProcessingSwitch
 
 export interface ProcessingSchemaStep {
     action: string,
@@ -41,6 +41,21 @@ export interface ProcessingLookupJson extends ProcessingSchemaStep {
 export interface ProcessingReplace extends ProcessingSchemaStep {
     match: string,
     insert: string | null | undefined
+}
+
+export interface ProcessingSwitch extends ProcessingSchemaStep {
+    paths: ProcessingSwitchConditions[]
+}
+
+export type ProcessingSwitchConditions = ProcessingSwitchCondition | ProcessingSwitchConditionField
+
+export interface ProcessingSwitchCondition {
+    condition: string,
+    processing: ProcessingSchemaSteps[]
+}
+
+export interface  ProcessingSwitchConditionField extends ProcessingSwitchCondition {
+    field: string,
 }
 
 export interface ProcessingStringFormat extends ProcessingSchemaStep {
