@@ -4,7 +4,7 @@ import projectListJson from "./mocks/ProjectsList.json";
 import projectFilesListJson from "./mocks/ProjectFilesList.json"
 import contentCategoryJson from "./mocks/ProjectContentsList.json"
 import itemDisplayInfoJson from "./mocks/ItemDisplayInfo.json"
-import '../src/App.css'
+import '../src/index.css'
 
 // Initialize MSW https://storybook.js.org/addons/msw-storybook-addon
 initialize();
