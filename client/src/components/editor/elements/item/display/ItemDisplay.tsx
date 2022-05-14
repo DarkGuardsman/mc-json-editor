@@ -1,9 +1,10 @@
 import {useItemDisplayInfoQuery} from "../../../../../generated/graphql";
 import {FcHighPriority, FcPackage, FcSynchronize} from "react-icons/fc";
 import styles from './ItemDisplay.module.css'
+import {ItemKey} from "../../../../../type/ItemKey";
 
 interface ItemDisplayProps {
-    itemID: string,
+    itemID: ItemKey,
 }
 
 /**
@@ -12,22 +13,30 @@ interface ItemDisplayProps {
  * @constructor
  */
 export default function ItemDisplay({itemID}: ItemDisplayProps): JSX.Element {
-
-    const {loading, error, data} = useItemDisplayInfoQuery({
-        skip: itemID === undefined || itemID === null,
-        variables: {
-            itemID
-        }
-    });
-
     if(itemID === undefined || itemID === null) {
-        return (
+        return ( //TODO add tooltip to note this is intentionally blank for screen readers
             <div className={styles.div}>
 
             </div>
         )
     }
-    else if (loading) {
+
+    return <ItemDisplayFetch itemID={itemID} />;
+}
+
+interface ItemDisplayFetchProps {
+    itemID: string,
+}
+
+function ItemDisplayFetch({itemID}: ItemDisplayFetchProps): JSX.Element {
+
+    const {loading, error, data} = useItemDisplayInfoQuery({
+        variables: {
+            itemID
+        }
+    });
+
+    if (loading) {
         return (
             <div className={styles.div}>
                 <FcSynchronize className={styles.icon}/>

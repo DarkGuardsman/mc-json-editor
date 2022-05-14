@@ -1,8 +1,9 @@
 import styles from './ItemGrid.module.css'
 import ItemGridRow from "../row/ItemRow";
+import {ItemKey} from "../../../../../type/ItemKey";
 
 interface ItemGridProps {
-    items: string[][]
+    items: ItemKey[][]
 }
 
 /**

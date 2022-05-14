@@ -174,7 +174,7 @@ export type QueryProjectArgs = {
 };
 
 export type ItemDisplayInfoQueryVariables = Exact<{
-  itemID: Scalars['String'];
+  itemID?: InputMaybe<Scalars['String']>;
 }>;
 
 
@@ -210,7 +210,7 @@ export type ProjectsListQuery = { __typename?: 'Query', projects?: Array<{ __typ
 
 
 export const ItemDisplayInfoDocument = gql`
-    query ItemDisplayInfo($itemID: String!) {
+    query ItemDisplayInfo($itemID: String) {
   data {
     item(key: $itemID) {
       name
@@ -239,7 +239,7 @@ export const ItemDisplayInfoDocument = gql`
  *   },
  * });
  */
-export function useItemDisplayInfoQuery(baseOptions: Apollo.QueryHookOptions<ItemDisplayInfoQuery, ItemDisplayInfoQueryVariables>) {
+export function useItemDisplayInfoQuery(baseOptions?: Apollo.QueryHookOptions<ItemDisplayInfoQuery, ItemDisplayInfoQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<ItemDisplayInfoQuery, ItemDisplayInfoQueryVariables>(ItemDisplayInfoDocument, options);
       }

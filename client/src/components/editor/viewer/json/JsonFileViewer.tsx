@@ -1,7 +1,7 @@
 import ReactJson from 'react-json-view'
 
 interface ViewTabProps {
-    json : JSON
+    json : object
 }
 
 export default function JsonFileViewer({json}: ViewTabProps): JSX.Element {

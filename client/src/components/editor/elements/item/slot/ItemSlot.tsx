@@ -1,8 +1,9 @@
 import styles from './ItemSlot.module.css'
 import ItemDisplay from "../display/ItemDisplay"
+import {ItemKey} from "../../../../../type/ItemKey";
 
 interface ItemSlotProps {
-    itemID: string,
+    itemID: ItemKey,
 }
 
 /**

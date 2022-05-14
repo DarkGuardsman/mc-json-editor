@@ -1,4 +1,4 @@
-query ItemDisplayInfo($itemID: String!) {
+query ItemDisplayInfo($itemID: String) {
     data {
         item(key: $itemID) {
             name

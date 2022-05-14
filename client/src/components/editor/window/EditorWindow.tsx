@@ -4,7 +4,7 @@ import {currentFileVar} from "../../../ApolloSetup";
 import {useReactiveVar} from "@apollo/client";
 import {ProjectFileEntry, useProjectFileInfoQuery} from "../../../generated/graphql";
 import {isNil} from "lodash";
-import JsonFileViewer from "../viewer/JsonFileViewer";
+import JsonFileViewer from "../viewer/json/JsonFileViewer";
 
 const TAB_JSON = "json";
 const TAB_EDITOR = "editor";
