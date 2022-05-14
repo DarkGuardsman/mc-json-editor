@@ -14,12 +14,20 @@ interface ItemDisplayProps {
 export default function ItemDisplay({itemID}: ItemDisplayProps): JSX.Element {
 
     const {loading, error, data} = useItemDisplayInfoQuery({
+        skip: itemID === undefined || itemID === null,
         variables: {
             itemID
         }
     });
 
-    if (loading) {
+    if(itemID === undefined || itemID === null) {
+        return (
+            <div className={styles.div}>
+
+            </div>
+        )
+    }
+    else if (loading) {
         return (
             <div className={styles.div}>
                 <FcSynchronize className={styles.icon}/>
