@@ -22,6 +22,7 @@ const categories = [
             id: "Minecraft:Forge",
             version: "1.12.2"
         },
+        enabled: true,
         detection: {
             mode: "json_field",
             fields: [
@@ -39,6 +40,7 @@ const categories = [
             id: "Minecraft:Forge",
             version: "1.12.2"
         },
+        enabled: true,
         detection: {
             mode: "json_field",
             fields: [
@@ -56,6 +58,7 @@ const categories = [
             id: "Minecraft:Forge",
             version: "1.12.2"
         },
+        enabled: true,
         detection: {
             mode: "json_field",
             fields: [
@@ -73,6 +76,7 @@ const categories = [
             id: "Minecraft:Forge",
             version: "1.12.2"
         },
+        enabled: false,
         detection: {
             mode: "regex",
             alg: '\\/assets\\/\\w+\\/models\\/item'
@@ -86,6 +90,7 @@ const categories = [
             id: "Minecraft:Forge",
             version: "1.12.2"
         },
+        enabled: false,
         detection: {
             mode: "regex",
             alg: '\\/assets\\/\\w+\\/models\\/block'
@@ -98,6 +103,7 @@ const categories = [
             id: "Minecraft:Forge",
             version: "1.12.2"
         },
+        enabled: false,
         detection: {
             mode: "regex",
             alg: '\\/assets\\/\\w+\\/blockstates'
@@ -113,7 +119,7 @@ const categories = [
 //Setup resolvers
 const resolvers = {
     Query: {
-        contentCategories: async () => categories,
+        contentCategories: async () => categories.filter(cat => cat.enabled),
         contentCategory: async (_, {id}) => Lodash.head(categories.filter(cat => cat.id === id))
     },
     ContentCategory: {
