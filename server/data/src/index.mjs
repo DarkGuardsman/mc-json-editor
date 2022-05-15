@@ -148,7 +148,6 @@ const resolvers = {
     },
     DataQuery: {
         item: async (_, {key, id}) => {
-            console.log("I was here")
             return items[key];
         },
     },
