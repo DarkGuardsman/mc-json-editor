@@ -61,7 +61,7 @@ const PROCESSING_SCHEMA : ProcessingSchema = {
                                         //TODO add tag support
                                         //TODO add list support
                                         //TODO add ore-dict support
-                                        //TODO add custom entry support
+                                        //TODO add custom entry support -> Likely want to convert this entire block into its own processing logic for reusablity
                                         {
                                             condition: "default",
                                             field: "item",
