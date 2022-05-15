@@ -3,6 +3,7 @@ import {GraphQLFileLoader} from "@graphql-tools/graphql-file-loader";
 import {mergeTypeDefs} from "@graphql-tools/merge";
 import {ApolloServer} from "apollo-server";
 import {buildSubgraphSchema} from "@apollo/subgraph";
+import FileSystem from 'fs';
 import Lodash from "lodash";
 
 const SERVER_PORT = process.env.PORT;
@@ -114,13 +115,42 @@ const categories = [
         ...entry,
         id: index
     }
-})
+});
+
+
+const items = {};
+
+const itemListRaw = FileSystem.readFileSync("./static/items/items.json");
+const itemListJson = JSON.parse(itemListRaw);
+
+itemListJson.forEach(({key, file}, index) => {
+    const rawFile = FileSystem.readFileSync("./static/items/" + file.replace("./", ""));
+    const fileData = JSON.parse(rawFile);
+    items[key] = {
+        id: index,
+        key: key,
+        name: fileData.name,
+        image: {
+            url : "http://localhost:4003/minecraft/" + fileData.image + ".png",
+            altText: fileData.name + " Item"
+        }
+    }
+});
 
 //Setup resolvers
 const resolvers = {
     Query: {
         contentCategories: async () => categories.filter(cat => cat.enabled),
-        contentCategory: async (_, {id}) => Lodash.head(categories.filter(cat => cat.id === id))
+        contentCategory: async (_, {id}) => Lodash.head(categories.filter(cat => cat.id === id)),
+        data: async () => {
+            return {}
+        }
+    },
+    DataQuery: {
+        item: async (_, {key, id}) => {
+            console.log("I was here")
+            return items[key];
+        },
     },
     ContentCategory: {
         __resolveReference(category) {
