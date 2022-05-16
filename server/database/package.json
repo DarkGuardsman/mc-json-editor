@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "volume": "podman volume create mongodata",
+    "volume:inspect": "podman volume inspect mongodata",
+    "run": "podman run -it -v mongodata:/data/db --name database2 -p 27017:27017 --user mongodb mongo",
+    "stop": "podman stop database2",
+    "remove": "podman rm database2",
+    "shell": "podman exec -it database2 bash"
+  }
+}
