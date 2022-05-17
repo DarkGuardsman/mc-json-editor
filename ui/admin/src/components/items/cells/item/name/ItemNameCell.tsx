@@ -1,10 +1,12 @@
 import {ItemTableRow} from "../../../../../types/ItemTableRows";
 import {UseTableCellProps} from "react-table";
-import {itemTableDataVar} from "../../../../../ApolloSetup";
 import {useState} from "react";
 
+export interface ItemNameCellProps extends UseTableCellProps<ItemTableRow, string> {
+    updateDataField: Function
+}
 
-export default function ItemNameCell(cell: UseTableCellProps<ItemTableRow, string>) {
+export default function ItemNameCell(cell: ItemNameCellProps) {
     const rowIndex = cell.row.index;
     const value = cell.value;
 
@@ -17,15 +19,7 @@ export default function ItemNameCell(cell: UseTableCellProps<ItemTableRow, strin
                 setUserText(event.target.value)
             }}
             onBlur={(event) => {
-                const copyOfArray = itemTableDataVar();
-                copyOfArray[rowIndex] = {
-                    ...copyOfArray[rowIndex],
-                    entry: {
-                        ...copyOfArray[rowIndex].entry,
-                        name: event.target.value
-                    }
-                }
-                itemTableDataVar(copyOfArray);
+                cell.updateDataField(rowIndex, "entry.name", event.target.value)
             }}
         />
     )
