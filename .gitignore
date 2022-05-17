@@ -5,8 +5,6 @@
 
 server/gateway/supergraph.graphql
 
-client/graphql.schema.json
-
 server/files/build/
 
 server/files/resolvers-types.ts
