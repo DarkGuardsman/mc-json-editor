@@ -1,0 +1,20 @@
+query ItemTable($itemID: String) {
+    packageSets {
+        id
+        name
+        packages {
+            id
+            name
+            contents {
+                category {
+                    id
+                    name
+                }
+                entries {
+                    id
+                    name
+                }
+            }
+        }
+    }
+}

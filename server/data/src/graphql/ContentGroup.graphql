@@ -1,5 +1,5 @@
 # Group of related content
 type ContentGroup {
     category: ContentCategory
-    entries: [ContentEntry] # individual entries of content (recipes, items, blocks)
+    entries: [ContentItemEntry] # individual entries of content (recipes, items, blocks)
 }
