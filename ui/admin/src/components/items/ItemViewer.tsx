@@ -5,10 +5,11 @@ import './ItemViewer.css';
 import {itemTableDataVar} from "../../ApolloSetup";
 import {ItemTableRow} from "../../types/ItemTableRows";
 import {useReactiveVar} from "@apollo/client";
+import ItemNameCell from "./cells/item/name/ItemNameCell";
 
 
 export default function ItemViewer(): JSX.Element {
-    const {data, loading, error} = useItemTableQuery({
+    const {loading, error} = useItemTableQuery({
         onCompleted : (data) => {
             itemTableDataVar(flattenQueryData(data));
         }
@@ -56,6 +57,7 @@ export default function ItemViewer(): JSX.Element {
                     {
                         Header: 'Name',
                         accessor: 'entry.name',
+                        Cell: ItemNameCell
                     },
                 ],
             },
