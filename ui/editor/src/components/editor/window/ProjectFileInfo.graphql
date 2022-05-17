@@ -1,0 +1,12 @@
+query ProjectFileInfo($projectId: Int!, $fileKey: String!) {
+    file(key: $fileKey, projectId: $projectId) {
+        fileContents
+        category {
+            id
+            name
+        }
+        project {
+            name
+        }
+    }
+}

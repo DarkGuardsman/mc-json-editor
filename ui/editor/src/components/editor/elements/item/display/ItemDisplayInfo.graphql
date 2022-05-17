@@ -1,0 +1,11 @@
+query ItemDisplayInfo($itemID: String) {
+    data {
+        item(key: $itemID) {
+            name
+            image {
+                altText
+                url
+            }
+        }
+    }
+}

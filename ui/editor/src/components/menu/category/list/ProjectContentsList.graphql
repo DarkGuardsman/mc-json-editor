@@ -1,0 +1,10 @@
+query ProjectContentsList($id: Int!) {
+    project(id: $id) {
+        contents {
+            category {
+                id
+                name
+            }
+        }
+    }
+}

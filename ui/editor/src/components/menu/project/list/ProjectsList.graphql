@@ -1,0 +1,6 @@
+query ProjectsList {
+    projects {
+        id
+        name
+    }
+}

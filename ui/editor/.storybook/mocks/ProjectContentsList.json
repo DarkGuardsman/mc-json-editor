@@ -1,0 +1,18 @@
+{
+  "project": {
+    "contents": [
+      {
+        "category": {
+          "id": 0,
+          "name": "Shaped Crafting"
+        }
+      },
+      {
+        "category": {
+          "id": 1,
+          "name": "Shapeless Crafting"
+        }
+      }
+    ]
+  }
+}

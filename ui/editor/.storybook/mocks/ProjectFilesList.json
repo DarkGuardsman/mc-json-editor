@@ -1,0 +1,32 @@
+{
+  "project": {
+    "content": {
+      "entries": [
+        {
+          "name": "/crafting/iron_rod.json",
+          "key": "/home/user1/documents/projects/my_project/src/resources/crafting/iron_rod.json"
+        },
+        {
+          "name": "/explosives/tnt.json",
+          "key": "/home/user1/documents/projects/my_project/src/resources/explosives/tnt.json"
+        },
+        {
+          "name": "/explosives/tnt2.json",
+          "key": "/home/user1/documents/projects/my_project/src/resources/explosives/tnt2.json"
+        },
+        {
+          "name": "/explosives/tnt3.json",
+          "key": "/home/user1/documents/projects/my_project/src/resources/explosives/tnt3.json"
+        },
+        {
+          "name": "/smelting_iron.json",
+          "key": "/home/user1/documents/projects/my_project/src/resources/smelting_iron.json"
+        },
+        {
+          "name": "/cut_log.json",
+          "key": "/home/user1/documents/projects/my_project/src/resources/cut_log.json"
+        }
+      ]
+    }
+  }
+}

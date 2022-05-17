@@ -1,0 +1,36 @@
+.div {
+    border-style: groove;
+    border-color: #282c34;
+    border-width: thin;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 400px;
+}
+
+.tabs {
+    border-style: groove;
+    border-color: #282c34;
+    border-width: thin;
+    border-bottom: 0;
+    display: inline-flex;
+    width: 100%
+}
+
+.tabber {
+    border: 0 groove #282c34;
+    border-bottom-width: 1px;
+    width:100%
+}
+
+.selected {
+    border-bottom: 0;
+}
+
+.tab {
+    border-style: groove;
+    border-color: #282c34;
+    border-width: thin;
+    border-top: 0;
+}
