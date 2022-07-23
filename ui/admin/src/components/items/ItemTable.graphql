@@ -1,4 +1,4 @@
-query ItemTable($itemID: String) {
+query ItemTable {
     packageSets {
         id
         name

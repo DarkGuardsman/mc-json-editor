@@ -66,7 +66,7 @@ export default function ItemViewer(): JSX.Element {
     );
     const rowData = useReactiveVar(itemTableDataVar);
 
-    const [skipPageReset, setSkipPageReset] = React.useState(false)
+    const [skipPageReset, setSkipPageReset] = React.useState(false);
 
 
     const updateDataField = (rowIndex: number, field: string, value: any) => {
